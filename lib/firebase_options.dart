@@ -47,20 +47,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDxIMt4vECGKYJg1KVdyXr-phCqOsFrntY',
-    appId: '1:780907783472:web:a4899bb13e73c9906294f5',
-    messagingSenderId: '780907783472',
-    projectId: 'flutter-starter-architec-f9349',
-    authDomain: 'flutter-starter-architec-f9349.firebaseapp.com',
-    storageBucket: 'flutter-starter-architec-f9349.appspot.com',
+    apiKey: 'AIzaSyD9UMGdstHoPTakrMuzOX_umHfH-lUDQWU',
+    appId: '1:920051944111:web:a68131236326f509f8225a',
+    messagingSenderId: '920051944111',
+    projectId: 'alaskawaiian',
+    authDomain: 'alaskawaiian.firebaseapp.com',
+    storageBucket: 'alaskawaiian.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAyawQKWHm151rDQQFBqj3-kDUeUs0jcg4',
-    appId: '1:780907783472:android:4991855fa4785d296294f5',
-    messagingSenderId: '780907783472',
-    projectId: 'flutter-starter-architec-f9349',
-    storageBucket: 'flutter-starter-architec-f9349.appspot.com',
+    apiKey: 'AIzaSyCaHx5nBKaAjhU-Hzjkk7lutuh295XwloE',
+    appId: '1:920051944111:android:b0ae24b14dcb33f5f8225a',
+    messagingSenderId: '920051944111',
+    projectId: 'alaskawaiian',
+    storageBucket: 'alaskawaiian.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(

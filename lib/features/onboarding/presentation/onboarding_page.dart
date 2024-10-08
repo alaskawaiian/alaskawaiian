@@ -24,7 +24,7 @@ class OnboardingPage extends ConsumerWidget {
           children: [
             Text(
               'Track your time.\nBecause time counts.',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
               textAlign: TextAlign.center,
             ),
             FractionallySizedBox(
@@ -40,7 +40,7 @@ class OnboardingPage extends ConsumerWidget {
                 'Get Started',
                 style: Theme.of(context)
                     .textTheme
-                    .headline5!
+                    .headlineSmall!
                     .copyWith(color: Colors.white),
               ),
             ),

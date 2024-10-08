@@ -18,34 +18,40 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <!-- This script installs service_worker.js to provide PWA functionality to
-       application. For more information, see:
-       https://developers.google.com/web/fundamentals/primers/service-workers -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('flutter_service_worker.js');
-      });
-    }
-  </script>
-  <!-- The core Firebase JS SDK is always required and must be listed first -->
-  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+<!-- This script installs service_worker.js to provide PWA functionality to
+     application. For more information, see:
+     https://developers.google.com/web/fundamentals/primers/service-workers -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('flutter_service_worker.js');
+    });
+  }
+</script>
 
-  <!-- TODO: Add SDKs for Firebase products that you want to use
-      https://firebase.google.com/docs/web/setup#available-libraries -->
-  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
-  <script src="./firebase-config.js"></script>
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-analytics.js"></script>
 
-  <!-- https://stackoverflow.com/questions/950087/how-do-i-include-a-javascript-file-in-another-javascript-file -->
-  <script type="module">
-    // Your web app's Firebase configuration
-    import { firebaseConfig } from './firebase-config.js';
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-  </script>
-  <script src="main.dart.js" type="application/javascript"></script>
+<!-- Initialize Firebase -->
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyD9UMGdstHoPTakrMuzOX_umHfH-lUDQWU",
+    authDomain: "alaskawaiian.firebaseapp.com",
+    projectId: "alaskawaiian",
+    storageBucket: "alaskawaiian.appspot.com",
+    messagingSenderId: "920051944111",
+    appId: "1:920051944111:web:a68131236326f509f8225a"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+
+<!-- Flutter Web App -->
+<script src="main.dart.js" type="application/javascript"></script>
 </body>
 </html>
+

@@ -9,6 +9,7 @@ import 'features/authorization/presentation/sign_in/sign_in_page.dart';
 import 'features/home/presentation/home_page.dart';
 import 'features/onboarding/presentation/onboarding_page.dart';
 import 'features/onboarding/presentation/onboarding_view_model.dart';
+import 'firebase_options.dart';
 import 'repositories/firestore/firestore_providers.dart';
 import 'repositories/shared_preferences/shared_preferences_database.dart';
 import 'repositories/shared_preferences/shared_preferences_providers.dart';
@@ -23,7 +24,9 @@ import 'repositories/shared_preferences/shared_preferences_providers.dart';
 /// it simplifies mocking.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   final sharedPreferences = await SharedPreferences.getInstance();
   runApp(ProviderScope(
     overrides: [
