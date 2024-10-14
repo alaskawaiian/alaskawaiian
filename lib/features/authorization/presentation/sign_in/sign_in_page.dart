@@ -3,10 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:starter_architecture_flutter_firebase/features/app_router.dart';
-import 'package:starter_architecture_flutter_firebase/features/authorization/presentation/sign_in/sign_in_button.dart';
 import 'package:starter_architecture_flutter_firebase/features/keys.dart';
 import 'package:starter_architecture_flutter_firebase/features/strings.dart';
 import 'package:starter_architecture_flutter_firebase/repositories/firestore/firestore_providers.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 
 import '../../../show_exception_alert_dialog.dart';
 import 'sign_in_view_model.dart';
@@ -33,7 +34,7 @@ class SignInPage extends ConsumerWidget {
     });
     return SignInPageContents(
       viewModel: signInModel,
-      title: 'Architecture Demo',
+      title: 'Alaskawaiian Rewards',
     );
   }
 }
@@ -41,7 +42,7 @@ class SignInPage extends ConsumerWidget {
 /// Builds either the [EmailPasswordSignInPage] or
 class SignInPageContents extends StatelessWidget {
   const SignInPageContents(
-      {Key? key, required this.viewModel, this.title = 'Architecture Demo'})
+      {Key? key, required this.viewModel, this.title = 'Alaskawaiian Rewards'})
       : super(key: key);
   final SignInViewModel viewModel;
   final String title;
@@ -61,72 +62,111 @@ class SignInPageContents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 2.0,
-        title: Text(title),
-      ),
-      backgroundColor: Colors.grey[200],
       body: _buildSignIn(context),
     );
   }
 
-  Widget _buildHeader() {
-    if (viewModel.isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
-    return const Text(
-      Strings.signIn,
-      textAlign: TextAlign.center,
-      style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w600),
-    );
-  }
-
   Widget _buildSignIn(BuildContext context) {
-    return Center(
-      child: LayoutBuilder(builder: (context, constraints) {
-        return Container(
-          width: min(constraints.maxWidth, 600),
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              const SizedBox(height: 32.0),
-              SizedBox(
-                height: 50.0,
-                child: _buildHeader(),
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/homepage.png'),
+          fit: BoxFit.cover,
+          alignment: Alignment(0.4, 0.0),
+        ),
+      ),
+      child: Center(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Container(
+              width: min(constraints.maxWidth, 600),
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.3),
               ),
-              const SizedBox(height: 32.0),
-              SignInButton(
-                key: emailPasswordButtonKey,
-                text: Strings.signInWithEmailPassword,
-                onPressed: viewModel.isLoading
-                    ? null
-                    : () => _showEmailPasswordSignInPage(context),
-                textColor: Colors.white,
-                color: Theme.of(context).primaryColor,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 60.0),
+                    child: SvgPicture.asset(
+                      'assets/logo-lockup.svg',
+                      height: 25,
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      const Text(
+                        "Alaskawaiian Rewards App",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Jomolhari',
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              offset: Offset(2.0, 2.0),
+                              blurRadius: 4.0,
+                              color: Colors.black54,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 20.0),
+                      const Text(
+                        "Two beloved brands. Taking you further.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              offset: Offset(1.0, 1.0),
+                              blurRadius: 2.0,
+                              color: Colors.black54,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 30.0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 50.0,
+                      child: ElevatedButton(
+                        onPressed: viewModel.isLoading
+                            ? null
+                            : () {
+                          _showEmailPasswordSignInPage(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                        child: const Text(
+                          'Get Started',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 8),
-              const Text(
-                Strings.or,
-                style: TextStyle(fontSize: 14.0, color: Colors.black87),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 8),
-              SignInButton(
-                key: anonymousButtonKey,
-                text: Strings.goAnonymous,
-                color: Theme.of(context).primaryColor,
-                textColor: Colors.white,
-                onPressed:
-                    viewModel.isLoading ? null : viewModel.signInAnonymously,
-              ),
-            ],
-          ),
-        );
-      }),
+            );
+          },
+        ),
+      ),
     );
   }
 }
