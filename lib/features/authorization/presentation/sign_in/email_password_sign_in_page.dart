@@ -144,8 +144,10 @@ class EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
     return FocusScope(
       node: _node,
       child: Form(
-        onChanged: () => model.updateWith(
-            email: _emailController.text, password: _passwordController.text),
+        onChanged: () =>
+            model.updateWith(
+                email: _emailController.text,
+                password: _passwordController.text),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -156,59 +158,101 @@ class EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
               const SizedBox(height: 8.0),
               _buildPasswordField(),
             ],
+            if (model.formType == EmailPasswordSignInFormType.signIn)
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  key: const Key('tertiary-button'),
+                  child: Text(
+                      EmailPasswordSignInStrings.forgotPasswordQuestion,
+                      style: TextStyle(color: Colors.blue[900]),
+                  ),
+                  onPressed: model.isLoading
+                      ? null
+                      : () =>
+                      _updateFormType(
+                          EmailPasswordSignInFormType.forgotPassword),
+                ),
+              ),
             const SizedBox(height: 8.0),
             FormSubmitButton(
               key: const Key('primary-button'),
               text: model.primaryButtonText,
               loading: model.isLoading,
               onPressed: model.isLoading ? null : _submit,
+              color: Colors.blue[900],
             ),
             const SizedBox(height: 8.0),
             TextButton(
               key: const Key('secondary-button'),
-              child: Text(model.secondaryButtonText),
+              child: Text(
+                  model.secondaryButtonText,
+                  style: TextStyle(color: Colors.blue[900]),
+              ),
               onPressed: model.isLoading
                   ? null
                   : () => _updateFormType(model.secondaryActionFormType),
             ),
-            if (model.formType == EmailPasswordSignInFormType.signIn)
-              TextButton(
-                key: const Key('tertiary-button'),
-                child: const Text(
-                    EmailPasswordSignInStrings.forgotPasswordQuestion),
-                onPressed: model.isLoading
-                    ? null
-                    : () => _updateFormType(
-                        EmailPasswordSignInFormType.forgotPassword),
-              ),
           ],
         ),
       ),
     );
   }
 
+  String _getHeaderMessage() {
+    switch (model.formType) {
+      case EmailPasswordSignInFormType.register:
+        return 'Get Started';
+      case EmailPasswordSignInFormType.forgotPassword:
+        return 'Reset Password';
+      case EmailPasswordSignInFormType.signIn:
+      default:
+        return 'Welcome back!';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 2.0,
-        title: Text(model.title),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(
+          color: Colors.blue[900],
+        ),
       ),
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Center(
-          child: LayoutBuilder(builder: (context, constraints) {
+          child: LayoutBuilder(
+            builder: (context, constraints) {
             return Container(
               width: min(constraints.maxWidth, 600),
               padding: const EdgeInsets.all(16.0),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: _buildContent(),
+              child: Column(
+                children: [
+                  Text(
+                    _getHeaderMessage(),
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      color: Colors.blue[900],
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Jomolhari',
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  Card(
+                    color: Colors.white,
+                    elevation: 0.0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: _buildContent(),
+                    ),
+                  ),
+                ],
                 ),
-              ),
-            );
-          }),
+              );
+            },
+          ),
         ),
       ),
     );

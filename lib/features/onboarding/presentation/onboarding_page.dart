@@ -143,7 +143,7 @@ class SignInPageContents extends StatelessWidget {
                           _showEmailPasswordSignInPage(context);
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
+                          backgroundColor: Colors.blue[900],
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),

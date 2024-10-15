@@ -28,7 +28,7 @@ class AppRouter {
           builder: (_) => EmailPasswordSignInPage.withFirebaseAuth(firebaseAuth,
               onSignedIn: args as void Function()),
           settings: settings,
-          fullscreenDialog: true,
+          fullscreenDialog: false,
         );
       case AppRoutes.editJobPage:
         return MaterialPageRoute<dynamic>(
