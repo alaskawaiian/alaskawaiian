@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../repositories/user/user_database.dart';
+import '../../../../common/data/user_database.dart';
 import 'email_password_sign_in_strings.dart';
 import 'string_validators.dart';
 
