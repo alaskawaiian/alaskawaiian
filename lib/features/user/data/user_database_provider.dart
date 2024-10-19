@@ -15,8 +15,7 @@ final userDatabaseProvider = Provider.autoDispose<UserDatabase?>((ref) {
 });
 
 /// Provides access to a single User's miles, updating it if it changes.
-final milesStreamProvider =
-    StreamProvider.autoDispose<int>((ref) {
+final milesStreamProvider = StreamProvider.autoDispose<int>((ref) {
   final database = ref.watch(userDatabaseProvider)!;
   return database.milesStream();
 });

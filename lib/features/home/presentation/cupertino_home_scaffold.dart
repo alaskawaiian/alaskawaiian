@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../cupertino_tab_view_router.dart';
 import '../../keys.dart';
 import 'tab_item.dart';
 
@@ -27,8 +26,7 @@ class CupertinoHomeScaffold extends StatelessWidget {
         key: const Key(Keys.tabBar),
         currentIndex: currentTab.index,
         items: [
-          _buildItem(TabItem.jobs),
-          _buildItem(TabItem.entries),
+          _buildItem(TabItem.questions),
           _buildItem(TabItem.account),
         ],
         onTap: (index) => onSelectTab(TabItem.values[index]),
@@ -38,8 +36,7 @@ class CupertinoHomeScaffold extends StatelessWidget {
         final item = TabItem.values[index];
         return CupertinoTabView(
           navigatorKey: navigatorKeys[item],
-          builder: (context) => widgetBuilders[item]!(context),
-          onGenerateRoute: CupertinoTabViewRouter.generateRoute,
+          builder: (context) => widgetBuilders[item]!(context)
         );
       },
     );

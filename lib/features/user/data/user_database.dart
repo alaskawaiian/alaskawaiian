@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../../../repositories/firestore/firestore_path.dart';
 import '../../../repositories/firestore/firestore_service.dart';
 
@@ -32,7 +34,9 @@ class UserDatabase {
   Stream<bool> hasAnsweredStream() => _service.watchDocument(
     path: FirestorePath.user(uid),
     builder: (data, documentID) => 
-      data?['lastAnsweredAt'] != null ? (data?['lastAnsweredAt'] as DateTime).isAfter(currentDateAtMidnight()) : false
+      data?['lastAnsweredAt'] != null 
+        ? (data?['lastAnsweredAt'] as Timestamp).toDate().isAfter(currentDateAtMidnight()) 
+        : false
   );
 
   Future<void> updateLastAnsweredAt() => _service.setData(

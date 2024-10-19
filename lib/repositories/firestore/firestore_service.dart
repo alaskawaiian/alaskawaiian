@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// Generic interface for accessing Firestore.
@@ -106,5 +108,18 @@ class FirestoreService {
     final reference = FirebaseFirestore.instance.doc(path);
     final snapshot = await reference.get();
     return builder(snapshot.data(), snapshot.id);
+  }
+
+  /// Fetch a snapshot of a random document from a collection.
+  Future<T> fetchRandomDocument<T>({
+    required String path,
+    required T Function(Map<String, dynamic>? data, String documentID) builder,
+  }) async {
+    final collection = FirebaseFirestore.instance.collection(path);
+    final snapshot = await collection.get();
+
+    // Select a random document from the collection
+    final document = snapshot.docs[Random().nextInt(snapshot.docs.length)];
+    return builder(document.data(), document.id);
   }
 }

@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../job/data/job_database_providers.dart';
-import '../../job/presentation/list_items_builder.dart';
-import '../../strings.dart';
-import '../data/entry_database_providers.dart';
-import 'entries_list_tile.dart';
-import 'entries_view_model.dart';
+import '../../user/data/user_database_provider.dart';
+import '../data/question_database_providers.dart';
 
-final entriesTileModelStreamProvider =
-StreamProvider.autoDispose<List<EntriesListTileModel>>(
-      (ref) {
-    final entryDatabase = ref.watch(entryDatabaseProvider)!;
-    final jobDatabase = ref.watch(jobDatabaseProvider)!;
-    final vm = EntriesViewModel(
-        entryDatabase: entryDatabase, jobDatabase: jobDatabase);
-    return vm.entriesTileModelStream;
-  },
-);
-
-class EntriesPage extends ConsumerWidget {
+class QuestionsPage extends ConsumerStatefulWidget {
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final entriesTileModelStream = ref.watch(entriesTileModelStreamProvider);
+  ConsumerState<QuestionsPage> createState() => _QuestionsPageState();
+}
+
+class _QuestionsPageState extends ConsumerState<QuestionsPage> {
+  @override
+  Widget build(BuildContext context) {
+    final userDatabase = ref.watch(userDatabaseProvider);
+    final question = ref.watch(randomQuestionProvider).value;
+    final hasAnswered = ref.watch(hasAnsweredStreamProvider).value;
+
+    Future<void> answerQuestion(int index) async {
+      if (question!.answer == index) {
+        await userDatabase?.addMiles(1);
+      }
+      await userDatabase?.updateLastAnsweredAt();
+    }
 
     return Scaffold(
       body: Stack(
@@ -84,9 +83,7 @@ class EntriesPage extends ConsumerWidget {
                       children: [
                         // Question Text
                         Text(
-                          'Electric lights, illuminated for King Kalakaua’s birthday Jubilee in Nov 1886, '
-                              'were introduced at Iolani Palace how many years before electricity '
-                              'was installed at the White House?',
+                          question!.question,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20.0,
@@ -114,11 +111,11 @@ class EntriesPage extends ConsumerWidget {
                                 elevation: 3.0,
                                 child: InkWell(
                                   onTap: () {
-                                    // Handle option selection
+                                    answerQuestion(index);
                                   },
                                   child: Center(
                                     child: Text(
-                                      'Option ${index + 1}',
+                                      question.choices[index],
                                       style: TextStyle(
                                         fontSize: 20.0,
                                         fontWeight: FontWeight.bold,
@@ -143,4 +140,5 @@ class EntriesPage extends ConsumerWidget {
     );
   }
 }
+
 

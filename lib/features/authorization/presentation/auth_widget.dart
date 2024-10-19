@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:starter_architecture_flutter_firebase/features/job/presentation/empty_content.dart';
-import 'package:starter_architecture_flutter_firebase/repositories/firestore/firestore_providers.dart';
+import '../../../repositories/firestore/firestore_providers.dart';
 
 /// Builds either [signedInBuilder], [nonSignedInBuilder], or
 /// [CircularProgressIndicator] depending upon the value of [authStateChangesProvider].
@@ -26,10 +25,7 @@ class AuthWidget extends ConsumerWidget {
         ),
       ),
       error: (_, __) => const Scaffold(
-        body: EmptyContent(
-          title: 'Something went wrong',
-          message: 'Can\'t load data right now.',
-        ),
+        body: Text('Something went wrong'),
       ),
     );
   }

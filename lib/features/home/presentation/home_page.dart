@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../account/presentation/account_page.dart';
-import '../../entry/presentation/entries_page.dart';
-import '../../job/presentation/jobs_page.dart';
+import '../../question/presentation/questions_page.dart';
 import 'cupertino_home_scaffold.dart';
 import 'tab_item.dart';
 
@@ -16,18 +15,16 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  TabItem _currentTab = TabItem.jobs;
+  TabItem _currentTab = TabItem.questions;
 
   final Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
-    TabItem.jobs: GlobalKey<NavigatorState>(),
-    TabItem.entries: GlobalKey<NavigatorState>(),
+    TabItem.questions: GlobalKey<NavigatorState>(),
     TabItem.account: GlobalKey<NavigatorState>(),
   };
 
   Map<TabItem, WidgetBuilder> get widgetBuilders {
     return {
-      TabItem.jobs: (_) => JobsPage(),
-      TabItem.entries: (_) => EntriesPage(),
+      TabItem.questions: (_) => QuestionsPage(),
       TabItem.account: (_) => AccountPage(),
     };
   }
