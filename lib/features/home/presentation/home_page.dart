@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../account/presentation/account_page.dart';
+import '../../explore/presentation/explore_page.dart';
 import '../../question/presentation/questions_page.dart';
 import 'cupertino_home_scaffold.dart';
 import 'tab_item.dart';
@@ -20,6 +21,7 @@ class HomePageState extends State<HomePage> {
 
   final Map<TabItem,  GlobalKey<NavigatorState>> navigatorKeys = {
     TabItem.questions: GlobalKey<NavigatorState>(),
+    TabItem.explore: GlobalKey<NavigatorState>(),
     TabItem.account: GlobalKey<NavigatorState>(),
   };
 
@@ -27,6 +29,7 @@ class HomePageState extends State<HomePage> {
     return {
       TabItem.questions: (_) => QuestionsPage(),
       TabItem.account: (_) => AccountPage(),
+      TabItem.explore: (_) => ExplorePage(),
     };
   }
 
