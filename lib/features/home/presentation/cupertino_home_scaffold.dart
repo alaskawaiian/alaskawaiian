@@ -27,6 +27,7 @@ class CupertinoHomeScaffold extends StatelessWidget {
         currentIndex: currentTab.index,
         items: [
           _buildItem(TabItem.questions),
+          _buildItem(TabItem.explore),
           _buildItem(TabItem.account),
         ],
         onTap: (index) => onSelectTab(TabItem.values[index]),
@@ -35,9 +36,8 @@ class CupertinoHomeScaffold extends StatelessWidget {
       tabBuilder: (context, index) {
         final item = TabItem.values[index];
         return CupertinoTabView(
-          navigatorKey: navigatorKeys[item],
-          builder: (context) => widgetBuilders[item]!(context)
-        );
+            navigatorKey: navigatorKeys[item],
+            builder: (context) => widgetBuilders[item]!(context));
       },
     );
   }

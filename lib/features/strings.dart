@@ -26,4 +26,7 @@ class Strings {
   // Account page
   static const String account = 'Account';
   static const String accountPage = 'Account Page';
+
+  // Explore page
+  static const String explorePage = 'Explore';
 }
