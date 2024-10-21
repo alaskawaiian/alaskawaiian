@@ -19,16 +19,16 @@ class HomePageState extends State<HomePage> {
   TabItem _currentTab = TabItem.questions;
 
   final Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
-    TabItem.questions: GlobalKey<NavigatorState>(),
     TabItem.explore: GlobalKey<NavigatorState>(),
+    TabItem.questions: GlobalKey<NavigatorState>(),
     TabItem.account: GlobalKey<NavigatorState>(),
   };
 
   Map<TabItem, WidgetBuilder> get widgetBuilders {
     return {
+      TabItem.explore: (_) => ExplorePage(),
       TabItem.questions: (_) => QuestionsPage(),
       TabItem.account: (_) => AccountPage(),
-      TabItem.explore: (_) => ExplorePage(),
     };
   }
 

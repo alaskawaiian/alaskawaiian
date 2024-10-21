@@ -6,13 +6,13 @@ class Post2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExplorePost(
-        username: 'alaskawaiian',
-        caption: 'visit aloha stadium!',
-        hashtags: '#alaskawaiian #hawaii',
-        likes: '23k',
-        comments: '1.2k',
-        saves: '122',
-        shares: '254',
-        videoURL: 'assets/videos/tiktok-aloha-stadium.MP4');
+        username: 'Corban De La Vega',
+        caption: 'moving postcards from oahu',
+        hashtags: '#hawaii',
+        likes: '23.5k',
+        comments: '74k',
+        saves: '3018',
+        shares: '1629',
+        videoURL: 'assets/videos/tiktok-hawaii.MP4');
   }
 }
