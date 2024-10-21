@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:starter_architecture_flutter_firebase/features/keys.dart';
 import 'package:starter_architecture_flutter_firebase/features/strings.dart';
 
-enum TabItem { jobs, entries, account }
+enum TabItem { questions, account,  }
 
 /// Implements the key, title, and icon associated with the Jobs, Entrys, and
 /// Account pages.
@@ -15,15 +15,10 @@ class TabItemData {
   final IconData icon;
 
   static const Map<TabItem, TabItemData> allTabs = {
-    TabItem.jobs: TabItemData(
-      key: Keys.jobsTab,
-      title: Strings.jobs,
-      icon: Icons.work,
-    ),
-    TabItem.entries: TabItemData(
-      key: Keys.entriesTab,
-      title: Strings.entries,
-      icon: Icons.view_headline,
+    TabItem.questions: TabItemData(
+      key: Keys.questionsTab,
+      title: Strings.questions,
+      icon: Icons.quiz,
     ),
     TabItem.account: TabItemData(
       key: Keys.accountTab,
