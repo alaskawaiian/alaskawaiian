@@ -26,67 +26,68 @@ class ExplorePost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.black,
         body: Stack(children: [
-      // the user's post
-      ExploreVideo(videoURL: videoURL),
-      // the user's name and the post caption
-      SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Container(
-              alignment: Alignment(-1, 1),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  // the user's name
-                  Text(username,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 15,
-                      )),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  RichText(
-                      text: TextSpan(children: [
-                    // caption
-                    TextSpan(
-                      text: caption,
-                      style: DefaultTextStyle.of(context).style.copyWith(
-                            color: Colors.white,
-                          ),
-                    ),
-                    // hashtags
-                    TextSpan(
-                      text: ' $hashtags',
-                      style: DefaultTextStyle.of(context).style.copyWith(
+          // the user's post
+          ExploreVideo(videoURL: videoURL),
+          // the user's name and the post caption
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Container(
+                  alignment: Alignment(-1, 1),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      // the user's name
+                      Text(username,
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
-                          ),
-                    ),
-                  ])),
-                ],
-              )),
-        ),
-      ),
-      SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Container(
-              alignment: Alignment(1, 1),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ExploreButton(icon: Icons.favorite, number: likes),
-                  ExploreButton(icon: Icons.comment, number: comments),
-                  ExploreButton(icon: Icons.bookmark, number: saves),
-                  ExploreButton(icon: Icons.send, number: shares),
-                ],
-              )),
-        ),
-      )
-    ]));
+                            fontSize: 15,
+                          )),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      RichText(
+                          text: TextSpan(children: [
+                        // caption
+                        TextSpan(
+                          text: caption,
+                          style: DefaultTextStyle.of(context).style.copyWith(
+                                color: Colors.white,
+                              ),
+                        ),
+                        // hashtags
+                        TextSpan(
+                          text: ' $hashtags',
+                          style: DefaultTextStyle.of(context).style.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                        ),
+                      ])),
+                    ],
+                  )),
+            ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Container(
+                  alignment: Alignment(1, 1),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ExploreButton(icon: Icons.favorite, number: likes),
+                      ExploreButton(icon: Icons.comment, number: comments),
+                      ExploreButton(icon: Icons.bookmark, number: saves),
+                      ExploreButton(icon: Icons.send, number: shares),
+                    ],
+                  )),
+            ),
+          )
+        ]));
   }
 }
