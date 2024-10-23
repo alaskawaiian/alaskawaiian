@@ -28,7 +28,12 @@ class _ExploreVideoState extends State<ExploreVideo> {
 
   @override
   Widget build(BuildContext context) {
-    return VideoPlayer(_controller);
+    return Center(
+      child: AspectRatio(
+        aspectRatio: _controller.value.aspectRatio,
+        child: VideoPlayer(_controller),
+      ),
+    );
   }
 
   @override
