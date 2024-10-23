@@ -34,6 +34,7 @@ dependencies:
   rxdart: ^0.28.0
   shared_preferences: ^2.0.6
   state_notifier: ^1.0.0
+  video_player: ^2.9.2
 
 dev_dependencies:
   build_runner: ^2.3.3
@@ -58,6 +59,7 @@ flutter:
     - assets/time-tracking.svg
     - assets/homepage.png
     - assets/logo-lockup.svg
+    - assets/videos/
   fonts:
     - family: Jomolhari
       fonts:
