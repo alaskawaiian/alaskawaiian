@@ -122,6 +122,10 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
                         ],
                       ),
                     ) :
+                    question == null
+                        ? Center(
+                      child: CircularProgressIndicator(),
+                    ) :
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
