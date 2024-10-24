@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../repositories/firestore/firestore_providers.dart';
+import '../../push_notification.dart';
 
 /// Builds either [signedInBuilder], [nonSignedInBuilder], or
 /// [CircularProgressIndicator] depending upon the value of [authStateChangesProvider].
@@ -33,6 +34,8 @@ class AuthWidget extends ConsumerWidget {
   /// Returns either the signedInBuilder or nonSignedInBuilder.
   Widget _data(BuildContext context, User? user) {
     if (user != null) {
+      final PushNotificationApi pushNotificationApi = PushNotificationApi();
+      pushNotificationApi.initNotifications();
       return signedInBuilder(context);
     }
     return nonSignedInBuilder(context);

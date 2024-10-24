@@ -10,6 +10,7 @@ import 'tab_item.dart';
 /// page depending upon which tab has been pressed.
 /// Uses [WillPopScope] to disable the back button.
 class HomePage extends StatefulWidget {
+  static const routeName = '/home-page';
   @override
   HomePageState createState() => HomePageState();
 }
@@ -17,7 +18,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   TabItem _currentTab = TabItem.questions;
 
-  final Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
+  final Map<TabItem,  GlobalKey<NavigatorState>> navigatorKeys = {
     TabItem.questions: GlobalKey<NavigatorState>(),
     TabItem.account: GlobalKey<NavigatorState>(),
   };
@@ -29,7 +30,7 @@ class HomePageState extends State<HomePage> {
     };
   }
 
-  void _select(TabItem tabItem) {
+  void select(TabItem tabItem) {
     if (tabItem == _currentTab) {
       // pop to first route
       navigatorKeys[tabItem]!.currentState?.popUntil((route) => route.isFirst);
@@ -46,7 +47,7 @@ class HomePageState extends State<HomePage> {
               false),
       child: CupertinoHomeScaffold(
         currentTab: _currentTab,
-        onSelectTab: _select,
+        onSelectTab: select,
         widgetBuilders: widgetBuilders,
         navigatorKeys: navigatorKeys,
       ),
