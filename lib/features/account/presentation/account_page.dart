@@ -83,6 +83,16 @@ class AccountPage extends ConsumerWidget {
             ),
             const SizedBox(height: 20),
             _buildInfoCard(
+              icon: Icons.trending_up,
+              label: 'Streak',
+              value: '5 days',
+            ),
+            _buildInfoCard(
+              icon: Icons.directions_walk,
+              label: 'Miles/Points',
+              value: '120 miles',
+            ),
+            _buildInfoCard(
               icon: Icons.person,
               label: 'Name',
               value: user.displayName ?? 'N/A',
@@ -97,8 +107,6 @@ class AccountPage extends ConsumerWidget {
               label: 'Password',
               value: '********',
             ),
-
-            const SizedBox(height: 280),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
