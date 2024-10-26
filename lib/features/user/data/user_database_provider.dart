@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../domain/user.dart';
 import '../../../repositories/firestore/firestore_providers.dart';
 import 'user_database.dart';
 
@@ -14,15 +15,9 @@ final userDatabaseProvider = Provider.autoDispose<UserDatabase?>((ref) {
   return null;
 });
 
-/// Provides access to a single User's miles, updating it if it changes.
-final milesStreamProvider = StreamProvider.autoDispose<int>((ref) {
+/// Provides access to a single User, updating it if it changes.
+final userStreamProvider = StreamProvider.autoDispose<User>((ref) {
   final database = ref.watch(userDatabaseProvider)!;
-  return database.milesStream();
+  return database.userStream();
 });
 
-/// Provides access to check if a single User has answered the daily question, updating it if it changes.
-final hasAnsweredStreamProvider =
-    StreamProvider.autoDispose<bool>((ref) {
-  final database = ref.watch(userDatabaseProvider)!;
-  return database.hasAnsweredStream();
-});
