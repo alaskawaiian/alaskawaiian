@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 class ExploreButton extends StatelessWidget {
   // the icon of the button
   final icon;
-  // the corresponding number that is on the bottom of the icon
-  final String number;
 
-  ExploreButton({required this.icon, required this.number});
+  ExploreButton({required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +16,6 @@ class ExploreButton extends StatelessWidget {
           size: 40,
           color: Colors.white,
         ),
-        SizedBox(
-          height: 2,
-        ),
-        Text(number,
-            style: TextStyle(
-              color: Colors.white,
-            )),
       ]),
     );
   }

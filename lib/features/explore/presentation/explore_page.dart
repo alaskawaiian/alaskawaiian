@@ -23,28 +23,16 @@ class _ExplorePageState extends State<ExplorePage> {
               username: 'Jenielle',
               caption: 'Aloha Stadium Swap Meet on Oahu!',
               hashtags: '#hawaii #supportlocal',
-              likes: '9,456',
-              comments: '45',
-              saves: '123',
-              shares: '98',
               videoURL: 'assets/videos/tiktok-aloha-stadium.MP4'),
           ExplorePost(
               username: 'Corban De La Vega',
               caption: 'moving postcards from oahu',
               hashtags: '#hawaii',
-              likes: '23.5k',
-              comments: '74k',
-              saves: '3018',
-              shares: '1629',
               videoURL: 'assets/videos/tiktok-hawaii.MP4'),
           ExplorePost(
               username: 'jasminstanleyy',
               caption: 'Alaska feels like a different planet.',
               hashtags: '#alaskawaiian #alaska',
-              likes: '238.2k',
-              comments: '900',
-              saves: '26.7k',
-              shares: '37.9k',
               videoURL: 'assets/videos/tiktok-alaska.MP4'),
         ]));
   }

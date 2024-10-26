@@ -6,20 +6,12 @@ class ExplorePost extends StatelessWidget {
   final String username;
   final String caption;
   final String hashtags;
-  final String likes;
-  final String comments;
-  final String saves;
-  final String shares;
   final String videoURL;
 
   ExplorePost({
     required this.username,
     required this.caption,
     required this.hashtags,
-    required this.likes,
-    required this.comments,
-    required this.saves,
-    required this.shares,
     required this.videoURL,
   });
 
@@ -40,6 +32,16 @@ class ExplorePost extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      // MaterialBanner(
+                      //   content: Text("Book a flight!"),
+                      //   actions: <Widget>[
+                      //     TextButton(onPressed: null, child: Text('OPEN')),
+                      //     TextButton(
+                      //       onPressed: null,
+                      //       child: Text('DISMISS'),
+                      //     ),
+                      //   ],
+                      // ),
                       // the user's name
                       Text(username,
                           style: TextStyle(
@@ -68,6 +70,10 @@ class ExplorePost extends StatelessWidget {
                               ),
                         ),
                       ])),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Text("Book a flight!"),
                     ],
                   )),
             ),
@@ -80,10 +86,9 @@ class ExplorePost extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      ExploreButton(icon: Icons.favorite, number: likes),
-                      ExploreButton(icon: Icons.comment, number: comments),
-                      ExploreButton(icon: Icons.bookmark, number: saves),
-                      ExploreButton(icon: Icons.send, number: shares),
+                      ExploreButton(
+                        icon: Icons.send,
+                      ),
                     ],
                   )),
             ),
