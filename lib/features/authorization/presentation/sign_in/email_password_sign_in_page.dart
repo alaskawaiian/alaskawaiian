@@ -33,7 +33,6 @@ class EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
   final FocusScopeNode _node = FocusScopeNode();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _displayNameController = TextEditingController();
 
   EmailPasswordSignInModel get model => widget.model;
 
@@ -50,7 +49,6 @@ class EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
     _node.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _displayNameController.dispose();
     super.dispose();
   }
 
@@ -98,17 +96,10 @@ class EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
     _submit();
   }
 
-  void _displayNameEditingComplete() {
-    if (model.canSubmitDisplayName) {
-      _node.nextFocus();
-    }
-  }
-
   void _updateFormType(EmailPasswordSignInFormType formType) {
     model.updateFormType(formType);
     _emailController.clear();
     _passwordController.clear();
-    _displayNameController.clear();
   }
 
   Widget _buildEmailField() {
@@ -149,23 +140,6 @@ class EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
     );
   }
 
-  Widget  _buildDisplayNameField() {
-    return TextFormField(
-      key: const Key('displayName'),
-      controller: _displayNameController,
-      decoration: InputDecoration(
-        labelText: 'Display Name',
-        hintText: 'Enter your display name',
-        errorText: model.displayNameErrorText,
-        enabled: !model.isLoading,
-      ),
-      autocorrect: false,
-      textInputAction: TextInputAction.next,
-      keyboardAppearance: Brightness.light,
-      onEditingComplete: _displayNameEditingComplete,
-    );
-  }
-
   Widget _buildContent() {
     return FocusScope(
       node: _node,
@@ -173,16 +147,11 @@ class EmailPasswordSignInPageState extends State<EmailPasswordSignInPage> {
         onChanged: () =>
             model.updateWith(
                 email: _emailController.text,
-                password: _passwordController.text,
-                displayName: _displayNameController.text),
+                password: _passwordController.text),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             const SizedBox(height: 8.0),
-            if (model.formType == EmailPasswordSignInFormType.register) ...[
-              const SizedBox(height: 8.0),
-              _buildDisplayNameField(),
-            ],
             _buildEmailField(),
             if (model.formType !=
                 EmailPasswordSignInFormType.forgotPassword) ...<Widget>[

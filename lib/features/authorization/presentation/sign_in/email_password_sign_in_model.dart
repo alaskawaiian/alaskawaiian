@@ -18,7 +18,6 @@ class EmailAndPasswordValidators {
       MinLengthStringValidator(8);
   final StringValidator passwordSignInSubmitValidator =
       NonEmptyStringValidator();
-  final StringValidator displayNameValidator = MinLengthStringValidator(3);
 }
 
 class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
@@ -26,7 +25,6 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
     required this.firebaseAuth,
     this.email = '',
     this.password = '',
-    this.displayName = '',
     this.formType = EmailPasswordSignInFormType.signIn,
     this.isLoading = false,
     this.submitted = false,
@@ -35,7 +33,6 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
 
   String email;
   String password;
-  String displayName;
   EmailPasswordSignInFormType formType;
   bool isLoading;
   bool submitted;
@@ -55,7 +52,6 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
         case EmailPasswordSignInFormType.register:
           UserCredential userCredential = await firebaseAuth.createUserWithEmailAndPassword(
               email: email, password: password);
-          await userCredential.user!.updateDisplayName(displayName);
           await UserDatabase(uid: userCredential.user!.uid).initUser();
           break;
         case EmailPasswordSignInFormType.forgotPassword:
@@ -74,13 +70,10 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
 
   void updatePassword(String password) => updateWith(password: password);
 
-  void updateDisplayName(String displayName) => updateWith(displayName: displayName);
-
   void updateFormType(EmailPasswordSignInFormType formType) {
     updateWith(
       email: '',
       password: '',
-      displayName: '',
       formType: formType,
       isLoading: false,
       submitted: false,
@@ -90,14 +83,12 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
   void updateWith({
     String? email,
     String? password,
-    String? displayName,
     EmailPasswordSignInFormType? formType,
     bool? isLoading,
     bool? submitted,
   }) {
     this.email = email ?? this.email;
     this.password = password ?? this.password;
-    this.displayName = displayName ?? this.displayName;
     this.formType = formType ?? this.formType;
     this.isLoading = isLoading ?? this.isLoading;
     this.submitted = submitted ?? this.submitted;
@@ -173,21 +164,11 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
     return passwordSignInSubmitValidator.isValid(password);
   }
 
-  bool get canSubmitDisplayName {
-    return displayNameValidator.isValid(displayName);
-  }
-
   bool get canSubmit {
-    final bool canSubmitFields;
-
-    if (formType == EmailPasswordSignInFormType.forgotPassword) {
-      canSubmitFields = canSubmitEmail;
-    } else if (formType == EmailPasswordSignInFormType.register) {
-      canSubmitFields = canSubmitEmail && canSubmitPassword && canSubmitDisplayName;
-    } else {
-      canSubmitFields = canSubmitEmail && canSubmitPassword;
-    }
-
+    final bool canSubmitFields =
+        formType == EmailPasswordSignInFormType.forgotPassword
+            ? canSubmitEmail
+            : canSubmitEmail && canSubmitPassword;
     return canSubmitFields && !isLoading;
   }
 
@@ -207,13 +188,8 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
     return showErrorText ? errorText : null;
   }
 
-  String? get displayNameErrorText {
-    final bool showErrorText = submitted && !canSubmitDisplayName;
-    return showErrorText ? 'Display name can\'t be empty' : null;
-  }
-
   @override
   String toString() {
-    return 'email: $email, password: $password, displayName: $displayName, formType: $formType, isLoading: $isLoading, submitted: $submitted';
+    return 'email: $email, password: $password, formType: $formType, isLoading: $isLoading, submitted: $submitted';
   }
 }

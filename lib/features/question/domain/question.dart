@@ -14,6 +14,12 @@ class Question with _$Question {
 
   factory Question.fromJson(Map<String, dynamic> json) => _$QuestionFromJson(json);
 
-  factory Question.fromFirebase(Map<String, dynamic> json, String documentId) =>
-    _$QuestionFromJson({"id": documentId, ...json});
+  factory Question.fromFirebase(Map<String, dynamic> json, String documentId) {
+    return Question(
+      id: documentId,
+      question: json['question'] as String,
+      choices: List<String>.from(json['choices'] as List),
+      answer: json['answer'] as int
+    );
+  }
 }

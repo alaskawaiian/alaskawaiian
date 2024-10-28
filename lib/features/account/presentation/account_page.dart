@@ -45,115 +45,47 @@ class AccountPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final firebaseAuth = ref.watch(firebaseAuthProvider);
     final user = firebaseAuth.currentUser!;
-
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.blue[500]!, Colors.blue[900]!],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-              child: Column(
-                children: [
-                  const SizedBox(height: 50),
-                  Avatar(
-                    photoUrl: user.photoURL,
-                    radius: 50,
-                    borderColor: Colors.white,
-                    borderWidth: 3.0,
-                  ),
-                  Text(
-                    user.displayName ?? 'Guest',
-                    style: const TextStyle(
-                      fontSize: 22,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                ],
+      appBar: AppBar(
+        title: const Text(Strings.accountPage),
+        actions: <Widget>[
+          TextButton(
+            key: const Key(Keys.logout),
+            child: const Text(
+              Strings.logout,
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Colors.white,
               ),
             ),
-            const SizedBox(height: 20),
-            _buildInfoCard(
-              icon: Icons.trending_up,
-              label: 'Streak',
-              value: '5 days',
-            ),
-            _buildInfoCard(
-              icon: Icons.directions_walk,
-              label: 'Miles/Points',
-              value: '120 miles',
-            ),
-            _buildInfoCard(
-              icon: Icons.person,
-              label: 'Name',
-              value: user.displayName ?? 'N/A',
-            ),
-            _buildInfoCard(
-              icon: Icons.email,
-              label: 'Email',
-              value: user.email ?? 'N/A',
-            ),
-            _buildInfoCard(
-              icon: Icons.lock,
-              label: 'Password',
-              value: '********',
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                backgroundColor: Colors.blue[900],
-              ),
-              onPressed: () => _confirmSignOut(context, firebaseAuth),
-              child: const Text(
-                'Log Out',
-                style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white),
-              ),
-            ),
-            const SizedBox(height: 20),
-          ],
+            onPressed: () => _confirmSignOut(context, firebaseAuth),
+          ),
+        ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(130.0),
+          child: _buildUserInfo(user),
         ),
       ),
     );
   }
 
-  // Widget for building each information card
-  Widget _buildInfoCard({
-    required IconData icon,
-    required String label,
-    required String value,
-    bool hasEditOption = false,
-    VoidCallback? onEditPressed,
-  }) {
-    return Card(
-      color: Colors.grey[200],
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      elevation: 4,
-      child: ListTile(
-        leading: Icon(icon, color: Colors.blue[900]),
-        title: Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(value),
-        trailing: hasEditOption
-            ? IconButton(
-          icon: const Icon(Icons.edit, color: Colors.grey),
-          onPressed: onEditPressed,
-        )
-            : null,
-      ),
+  Widget _buildUserInfo(User user) {
+    return Column(
+      children: [
+        Avatar(
+          photoUrl: user.photoURL,
+          radius: 50,
+          borderColor: Colors.black54,
+          borderWidth: 2.0,
+        ),
+        const SizedBox(height: 8),
+        if (user.displayName != null)
+          Text(
+            user.displayName!,
+            style: const TextStyle(color: Colors.white),
+          ),
+        const SizedBox(height: 8),
+      ],
     );
   }
 }

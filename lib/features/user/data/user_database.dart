@@ -1,4 +1,5 @@
-import '../domain/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../../../repositories/firestore/firestore_path.dart';
 import '../../../repositories/firestore/firestore_service.dart';
 
@@ -16,12 +17,12 @@ class UserDatabase {
 
   Future<void> initUser() => _service.setData(
     path: FirestorePath.user(uid), 
-    data: { 'miles': 0, 'streak': 0, 'lastAnsweredAt': null }
+    data: { 'miles': 0, 'lastAnsweredAt': null }
   );
 
-  Stream<User> userStream() => _service.watchDocument(
+  Stream<int> milesStream() => _service.watchDocument(
     path: FirestorePath.user(uid), 
-    builder: (data, documentID) => User.fromFirebase(data!, documentID)
+    builder: (data, documentID) => data?['miles']
   );
 
   Future<void> addMiles(int miles) => _service.incrementData(
@@ -30,16 +31,12 @@ class UserDatabase {
     incrementBy: miles
   );
 
-  Future<void> incrementStreak() => _service.incrementData(
-    path: FirestorePath.user(uid), 
-    fieldName: 'streak', 
-    incrementBy: 1
-  );
-
-  Future<void> resetStreak() => _service.setData(
-    path: FirestorePath.user(uid), 
-    data: { 'streak': 0 },
-    merge: true
+  Stream<bool> hasAnsweredStream() => _service.watchDocument(
+    path: FirestorePath.user(uid),
+    builder: (data, documentID) => 
+      data?['lastAnsweredAt'] != null 
+        ? (data?['lastAnsweredAt'] as Timestamp).toDate().isAfter(currentDateAtMidnight()) 
+        : false
   );
 
   Future<void> updateLastAnsweredAt() => _service.setData(
