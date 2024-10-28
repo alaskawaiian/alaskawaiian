@@ -4,8 +4,8 @@ class Keys {
   static const String tabBar = 'tabBar';
   static const String questionsTab = 'questionsTab';
   static const String accountTab = 'accountTab';
-  static const String exploreTab = 'exploreTab';
   static const String logout = 'logout';
   static const String alertDefault = 'alertDefault';
   static const String alertCancel = 'alertCancel';
+  static const String exploreTab = 'exploreTab';
 }

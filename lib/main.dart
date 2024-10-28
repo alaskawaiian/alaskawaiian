@@ -12,6 +12,8 @@ import 'repositories/firestore/firestore_providers.dart';
 import 'repositories/shared_preferences/shared_preferences_database.dart';
 import 'repositories/shared_preferences/shared_preferences_providers.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 /// Main program initializes [Firebase], obtains the [SharedPreferences],
 /// and finally runs [MyApp].
 ///
@@ -43,6 +45,7 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final firebaseAuth = ref.watch(firebaseAuthProvider);
     return MaterialApp(
+      navigatorKey: navigatorKey,
       theme: ThemeData(primarySwatch: Colors.indigo),
       debugShowCheckedModeBanner: false,
       home: AuthWidget(
@@ -53,6 +56,9 @@ class MyApp extends ConsumerWidget {
         ),
         signedInBuilder: (_) => HomePage(),
       ),
+      routes: {
+        HomePage.routeName: (context) => HomePage(),
+      },
       onGenerateRoute: (settings) =>
           AppRouter.onGenerateRoute(settings, firebaseAuth),
     );
