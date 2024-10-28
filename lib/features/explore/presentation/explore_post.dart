@@ -3,13 +3,13 @@ import 'package:starter_architecture_flutter_firebase/features/explore/presentat
 import 'package:starter_architecture_flutter_firebase/features/explore/presentation/explore_video.dart';
 
 class ExplorePost extends StatelessWidget {
-  final String username;
+  final String place;
   final String caption;
   final String hashtags;
   final String videoURL;
 
   ExplorePost({
-    required this.username,
+    required this.place,
     required this.caption,
     required this.hashtags,
     required this.videoURL,
@@ -43,7 +43,7 @@ class ExplorePost extends StatelessWidget {
                       //   ],
                       // ),
                       // the user's name
-                      Text(username,
+                      Text(place,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,

@@ -20,17 +20,17 @@ class _ExplorePageState extends State<ExplorePage> {
             scrollDirection: Axis.vertical,
             children: [
           ExplorePost(
-              username: 'Jenielle',
+              place: 'Aloha Stadium - Oahu, HI',
               caption: 'Aloha Stadium Swap Meet on Oahu!',
               hashtags: '#hawaii #supportlocal',
               videoURL: 'assets/videos/tiktok-aloha-stadium.MP4'),
           ExplorePost(
-              username: 'Corban De La Vega',
+              place: 'Oahu, HI',
               caption: 'moving postcards from oahu',
               hashtags: '#hawaii',
               videoURL: 'assets/videos/tiktok-hawaii.MP4'),
           ExplorePost(
-              username: 'jasminstanleyy',
+              place: 'Alaska',
               caption: 'Alaska feels like a different planet.',
               hashtags: '#alaskawaiian #alaska',
               videoURL: 'assets/videos/tiktok-alaska.MP4'),
