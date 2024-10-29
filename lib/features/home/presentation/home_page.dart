@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:starter_architecture_flutter_firebase/features/tiers/presentation/tiers.dart';
 
 import '../../account/presentation/account_page.dart';
 import '../../question/presentation/questions_page.dart';
@@ -21,12 +22,14 @@ class HomePageState extends State<HomePage> {
   final Map<TabItem,  GlobalKey<NavigatorState>> navigatorKeys = {
     TabItem.questions: GlobalKey<NavigatorState>(),
     TabItem.account: GlobalKey<NavigatorState>(),
+    TabItem.tiers: GlobalKey<NavigatorState>(),
   };
 
   Map<TabItem, WidgetBuilder> get widgetBuilders {
     return {
       TabItem.questions: (_) => QuestionsPage(),
       TabItem.account: (_) => AccountPage(),
+      TabItem.tiers: (_) => Tiers(),
     };
   }
 
