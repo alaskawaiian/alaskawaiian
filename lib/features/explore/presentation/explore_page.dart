@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'explore_post.dart';
+import 'package:youtube_shorts/youtube_shorts.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({Key? key}) : super(key: key);
@@ -10,30 +9,33 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExplorePageState extends State<ExplorePage> {
-  final _controller = PageController(initialPage: 0);
+  late final ShortsController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = ShortsController(
+      youtubeVideoSourceController: VideosSourceController.fromUrlList(
+      videoIds: [
+          'https://www.youtube.com/shorts/PiWJWfzVwjU',
+          'https://www.youtube.com/shorts/AeZ3dmC676c',
+          'https://www.youtube.com/shorts/L1lg_lxUxfw',
+          'https://www.youtube.com/shorts/OWPsdhLHK7c'
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: PageView(
-            controller: _controller,
-            scrollDirection: Axis.vertical,
-            children: [
-          ExplorePost(
-              place: 'Aloha Stadium - Oahu, HI',
-              caption: 'Aloha Stadium Swap Meet on Oahu!',
-              hashtags: '#hawaii #supportlocal',
-              videoURL: 'assets/videos/tiktok-aloha-stadium.MP4'),
-          ExplorePost(
-              place: 'Oahu, HI',
-              caption: 'moving postcards from oahu',
-              hashtags: '#hawaii',
-              videoURL: 'assets/videos/tiktok-hawaii.MP4'),
-          ExplorePost(
-              place: 'Alaska',
-              caption: 'Alaska feels like a different planet.',
-              hashtags: '#alaskawaiian #alaska',
-              videoURL: 'assets/videos/tiktok-alaska.MP4'),
-        ]));
+    return YoutubeShortsPage(
+      controller: _controller
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
