@@ -21,7 +21,8 @@ class EmailAndPasswordValidators {
   final StringValidator displayNameValidator = MinLengthStringValidator(3);
 }
 
-class EmailPasswordSignInModel with ChangeNotifier implements EmailAndPasswordValidators {
+class EmailPasswordSignInModel extends EmailAndPasswordValidators
+    with ChangeNotifier {
   EmailPasswordSignInModel({
     required this.firebaseAuth,
     this.email = '',
@@ -53,8 +54,8 @@ class EmailPasswordSignInModel with ChangeNotifier implements EmailAndPasswordVa
               EmailAuthProvider.credential(email: email, password: password));
           break;
         case EmailPasswordSignInFormType.register:
-          UserCredential userCredential = await firebaseAuth.createUserWithEmailAndPassword(
-              email: email, password: password);
+          UserCredential userCredential = await firebaseAuth
+              .createUserWithEmailAndPassword(email: email, password: password);
           await userCredential.user!.updateDisplayName(displayName);
           await UserDatabase(uid: userCredential.user!.uid).initUser();
           break;
@@ -74,7 +75,8 @@ class EmailPasswordSignInModel with ChangeNotifier implements EmailAndPasswordVa
 
   void updatePassword(String password) => updateWith(password: password);
 
-  void updateDisplayName(String displayName) => updateWith(displayName: displayName);
+  void updateDisplayName(String displayName) =>
+      updateWith(displayName: displayName);
 
   void updateFormType(EmailPasswordSignInFormType formType) {
     updateWith(
@@ -183,7 +185,8 @@ class EmailPasswordSignInModel with ChangeNotifier implements EmailAndPasswordVa
     if (formType == EmailPasswordSignInFormType.forgotPassword) {
       canSubmitFields = canSubmitEmail;
     } else if (formType == EmailPasswordSignInFormType.register) {
-      canSubmitFields = canSubmitEmail && canSubmitPassword && canSubmitDisplayName;
+      canSubmitFields =
+          canSubmitEmail && canSubmitPassword && canSubmitDisplayName;
     } else {
       canSubmitFields = canSubmitEmail && canSubmitPassword;
     }
@@ -216,24 +219,4 @@ class EmailPasswordSignInModel with ChangeNotifier implements EmailAndPasswordVa
   String toString() {
     return 'email: $email, password: $password, displayName: $displayName, formType: $formType, isLoading: $isLoading, submitted: $submitted';
   }
-  
-  @override
-  // TODO: implement displayNameValidator
-  StringValidator get displayNameValidator => throw UnimplementedError();
-  
-  @override
-  // TODO: implement emailInputFormatter
-  TextInputFormatter get emailInputFormatter => throw UnimplementedError();
-  
-  @override
-  // TODO: implement emailSubmitValidator
-  StringValidator get emailSubmitValidator => throw UnimplementedError();
-  
-  @override
-  // TODO: implement passwordRegisterSubmitValidator
-  StringValidator get passwordRegisterSubmitValidator => throw UnimplementedError();
-  
-  @override
-  // TODO: implement passwordSignInSubmitValidator
-  StringValidator get passwordSignInSubmitValidator => throw UnimplementedError();
 }

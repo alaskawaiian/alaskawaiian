@@ -254,7 +254,7 @@ class ShortsController extends ValueNotifier<ShortsState>
 
             await player.setPlaylistMode(
               _settings.videosWillBeInLoop
-                  ? PlaylistMode.loop
+                  ? PlaylistMode.single
                   : PlaylistMode.none,
             );
 
