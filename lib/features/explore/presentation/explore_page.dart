@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:media_kit_video/media_kit_video.dart' hide Video;
+import '../data/shorts_controller.dart';
+import '../data/video_source_controller.dart';
 import './explore_post.dart';
-import '../../../youtube_shorts_fork/youtube_explode_fork/youtube_explode_dart.dart';
-import '../../../youtube_shorts_fork/youtube_shorts.dart';
+import '../../../youtube_explode_fork/youtube_explode_dart.dart';
+import 'youtube_shorts/youtube_shorts.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({Key? key}) : super(key: key);
@@ -18,14 +21,13 @@ class _ExplorePageState extends State<ExplorePage> {
     super.initState();
     _controller = ShortsController(
         videosWillBeInLoop: false,
-        youtubeVideoSourceController:
-            VideosSourceController.fromMultiYoutubeChannels(
-                channelsName: ['@AlaskaAirlines', '@HawaiianAirlines']));
+        youtubeVideoSourceController: VideoSourceController.fromYoutubeChannels(
+            channelNames: ['@AlaskaAirlines', '@HawaiianAirlines']));
   }
 
   @override
   Widget build(BuildContext context) {
-    return YoutubeShortsPage(
+    return YoutubeShorts(
       controller: _controller,
       videoBuilder: (
         int index,
@@ -37,7 +39,9 @@ class _ExplorePageState extends State<ExplorePage> {
       ) {
         return ExplorePost(
             author: videoData.author,
-            description: videoData.description,
+            description: videoData.description == ''
+                ? videoData.title
+                : videoData.description,
             child: child);
       },
     );

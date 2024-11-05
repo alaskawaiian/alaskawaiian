@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import './default_widgets.dart';
-import '../../../youtube_shorts.dart';
+import '../../domain/shorts_state.dart';
+import '../../domain/video.dart';
+import 'youtube_shorts_default_widgets.dart';
 
 class VideoCompleterFutureBuilder extends StatelessWidget {
   /// The controller of the short's.

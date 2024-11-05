@@ -1,22 +1,19 @@
 import 'dart:async';
 import 'dart:collection';
+import 'package:alaskawaiian_rewards/features/explore/domain/video.dart';
 import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart' hide Video;
-import '../data/shorts_controller_settings.dart';
-import '../data/type_defs.dart';
-import '../logic/shorts_state.dart';
+import '../domain/shorts_state.dart';
 import 'package:synchronized/synchronized.dart';
-import '../source/interface_videos_source_controller.dart';
+import 'video_source_controller.dart';
 
-part 'mixin_video_control_shortcut.dart';
+part 'video_controls.dart';
 
-class ShortsController extends ValueNotifier<ShortsState>
-    with MixinVideoControlShortcut {
+class ShortsController extends ValueNotifier<ShortsState> with VideoControls {
   final Lock _lock;
-  final VideosSourceController _youtubeVideoInfoService;
+  final VideoSourceController _youtubeVideoInfoService;
   final VideoControllerConfiguration _defaultVideoControllerConfiguration;
-  ShortsControllerSettings _settings;
 
   /// * [youtubeVideoSourceController] controller can be one of two constructors:
   ///     1. [VideosSourceController.fromUrlList]
@@ -33,14 +30,12 @@ class ShortsController extends ValueNotifier<ShortsState>
   /// of [media_kit](https://pub.dev/packages/media_kit).
   ShortsController({
     List<int> indexsWhereWillContainAds = const [],
-    required VideosSourceController youtubeVideoSourceController,
-    ShortsControllerSettings settings = const ShortsControllerSettings(),
+    required VideoSourceController youtubeVideoSourceController,
     bool videosWillBeInLoop = true,
     bool startVideoMuted = false,
     VideoControllerConfiguration defaultVideoControllerConfiguration =
         const VideoControllerConfiguration(),
-  })  : _settings = settings,
-        _defaultVideoControllerConfiguration =
+  })  : _defaultVideoControllerConfiguration =
             defaultVideoControllerConfiguration,
         _youtubeVideoInfoService = youtubeVideoSourceController,
         _lock = Lock(),
@@ -54,16 +49,6 @@ class ShortsController extends ValueNotifier<ShortsState>
 
   @override
   int currentIndex = -1;
-
-  /// Will not update the video that already are in state/loaded.
-  ///
-  /// Will only update the next videos that are not in
-  /// state/loaded yet (that still will be fetched).
-  void updateControllerSettings({
-    required UpdateSettingsFunction updateFunction,
-  }) {
-    _settings = updateFunction(_settings);
-  }
 
   /// Will notify the controller that the current index has changed.
   /// This will trigger the preload of the previus 3 and next 3 videos.
@@ -97,19 +82,21 @@ class ShortsController extends ValueNotifier<ShortsState>
       if (previousVideo != null) {
         if (previousVideo is ShortsVideoData) {
           final VideoData video = await previousVideo.video.future;
-          // We will not wait this
           unawaited(video.videoController.player.pause());
           onPrevVideoPause?.call(video, prevIndex, currentIndex);
         }
       }
     }
 
-    if (_settings.startWithAutoplay == false) return;
-
     final currentVideo = getVideoInIndex(currentIndex);
     if (currentVideo != null) {
       if (currentVideo is ShortsVideoData) {
         final VideoData video = await currentVideo.video.future;
+        final hostedAudioUrl = Media.normalizeURI(
+            video.videoData.hostedVideoInfo.audioUrl.toString());
+
+        await video.videoController.player
+            .setAudioTrack(AudioTrack.uri(hostedAudioUrl));
         await video.videoController.player.play();
         onCurrentVideoPlay?.call(video, prevIndex, currentIndex);
       }
@@ -241,22 +228,19 @@ class ShortsController extends ValueNotifier<ShortsState>
             ));
             final hostedVideoUrl =
                 Media.normalizeURI(video.hostedVideoInfo.url.toString());
-            final hostedAudioUrl =
-                Media.normalizeURI(video.hostedVideoInfo.audioUrl.toString());
 
-            final willPlay =
-                _settings.startWithAutoplay && item.key == currentIndex;
+            await player.open(Media(hostedVideoUrl));
 
-            await player.open(Media(hostedVideoUrl), play: willPlay);
-            await player.setAudioTrack(AudioTrack.uri(hostedAudioUrl));
+            // Begin playing audio for first video
+            if (currentState.videos.length == 1) {
+              final hostedAudioUrl =
+                  Media.normalizeURI(video.hostedVideoInfo.audioUrl.toString());
+              await player.setAudioTrack(AudioTrack.uri(hostedAudioUrl));
+            }
 
-            await player.setVolume(_settings.startVideoWithVolume);
+            await player.setVolume(100);
 
-            await player.setPlaylistMode(
-              _settings.videosWillBeInLoop
-                  ? PlaylistMode.single
-                  : PlaylistMode.none,
-            );
+            await player.setPlaylistMode(PlaylistMode.single);
 
             final ShortsData? state = currentState.videos[item.key];
 

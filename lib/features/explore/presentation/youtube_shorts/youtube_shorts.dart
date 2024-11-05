@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../youtube_shorts.dart';
-import './elements/video_data_loader_element.dart';
-import './elements/youtube_shorts_video_player.dart';
-import './elements/video_completer_future_builder.dart';
+import '../../data/shorts_controller.dart';
+import '../../domain/shorts_state.dart';
+import '../../domain/video.dart';
+import 'video_data_loader_element.dart';
+import 'youtube_shorts_video_player.dart';
+import 'video_completer_future_builder.dart';
 
-class YoutubeShortsPage extends StatefulWidget {
+class YoutubeShorts extends StatefulWidget {
   /// The controller of the short's.
   final ShortsController controller;
 
@@ -84,7 +86,7 @@ class YoutubeShortsPage extends StatefulWidget {
   final double? initialVolume;
 
   /// The widget that will display the video.
-  const YoutubeShortsPage({
+  const YoutubeShorts({
     super.key,
     required this.controller,
     this.videoBuilder,
@@ -99,10 +101,10 @@ class YoutubeShortsPage extends StatefulWidget {
   });
 
   @override
-  State<YoutubeShortsPage> createState() => _YoutubeShortsPageState();
+  State<YoutubeShorts> createState() => _YoutubeShortsPageState();
 }
 
-class _YoutubeShortsPageState extends State<YoutubeShortsPage> {
+class _YoutubeShortsPageState extends State<YoutubeShorts> {
   late final PageController pageController;
 
   @override

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:enchanted_collection/enchanted_collection.dart';
 import 'package:media_kit_video/media_kit_video.dart' as media_kit show Video;
-import '../../data/type_defs.dart';
+
+import '../../domain/video.dart';
 
 class YoutubeShortsVideoPlayer extends StatefulWidget {
   final bool willHaveDefaultShortsControllers;

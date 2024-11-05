@@ -1,6 +1,6 @@
 part of 'shorts_controller.dart';
 
-mixin MixinVideoControlShortcut {
+mixin VideoControls {
   final Lock _videoControllerLock = Lock();
   ShortsStateWithData? _getCurrentState();
   int get currentIndex;

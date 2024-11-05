@@ -1,6 +1,7 @@
+import '../../domain/shorts_state.dart';
 import 'package:flutter/material.dart';
-import './default_widgets.dart';
-import '../../../youtube_shorts.dart';
+import '../../data/shorts_controller.dart';
+import 'youtube_shorts_default_widgets.dart';
 
 class VideoDataLoaderElement extends StatefulWidget {
   /// The controller of the short's.
