@@ -21,7 +21,7 @@ class EmailAndPasswordValidators {
   final StringValidator displayNameValidator = MinLengthStringValidator(3);
 }
 
-class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
+class EmailPasswordSignInModel with ChangeNotifier implements EmailAndPasswordValidators {
   EmailPasswordSignInModel({
     required this.firebaseAuth,
     this.email = '',
@@ -216,4 +216,24 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
   String toString() {
     return 'email: $email, password: $password, displayName: $displayName, formType: $formType, isLoading: $isLoading, submitted: $submitted';
   }
+  
+  @override
+  // TODO: implement displayNameValidator
+  StringValidator get displayNameValidator => throw UnimplementedError();
+  
+  @override
+  // TODO: implement emailInputFormatter
+  TextInputFormatter get emailInputFormatter => throw UnimplementedError();
+  
+  @override
+  // TODO: implement emailSubmitValidator
+  StringValidator get emailSubmitValidator => throw UnimplementedError();
+  
+  @override
+  // TODO: implement passwordRegisterSubmitValidator
+  StringValidator get passwordRegisterSubmitValidator => throw UnimplementedError();
+  
+  @override
+  // TODO: implement passwordSignInSubmitValidator
+  StringValidator get passwordSignInSubmitValidator => throw UnimplementedError();
 }

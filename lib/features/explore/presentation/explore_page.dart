@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:youtube_shorts/youtube_shorts.dart';
+import '../../../youtube_shorts_fork/youtube_shorts.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({Key? key}) : super(key: key);
@@ -15,14 +15,12 @@ class _ExplorePageState extends State<ExplorePage> {
   void initState() {
     super.initState();
     _controller = ShortsController(
-      youtubeVideoSourceController: VideosSourceController.fromUrlList(
-      videoIds: [
-          'https://www.youtube.com/shorts/PiWJWfzVwjU',
-          'https://www.youtube.com/shorts/AeZ3dmC676c',
-          'https://www.youtube.com/shorts/L1lg_lxUxfw',
-          'https://www.youtube.com/shorts/OWPsdhLHK7c'
-        ],
-      ),
+      youtubeVideoSourceController: VideosSourceController.fromMultiYoutubeChannels(
+        channelsName: [
+          '@AlaskaAirlines',
+          '@HawaiianAirlines'
+        ]
+      )
     );
   }
 
