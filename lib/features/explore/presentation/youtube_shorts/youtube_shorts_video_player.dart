@@ -30,6 +30,8 @@ class YoutubeShortsVideoPlayer extends StatefulWidget {
 
 class _YoutubeShortsVideoPlayerState extends State<YoutubeShortsVideoPlayer>
     with AutomaticKeepAliveClientMixin<YoutubeShortsVideoPlayer> {
+  bool isControlsVisible = false;
+
   @override
   void initState() {
     _initialVolume();
@@ -61,14 +63,44 @@ class _YoutubeShortsVideoPlayerState extends State<YoutubeShortsVideoPlayer>
         SizedBox.expand(
           child: Builder(
             builder: (context) {
-              final willIgnore = !widget.willHaveDefaultShortsControllers;
-
-              final videoPlayer = IgnorePointer(
-                ignoring: willIgnore,
-                child: media_kit.Video(
-                  fill: Colors.transparent,
-                  controller: widget.data.videoController,
-                ),
+              final videoPlayer = media_kit.Video(
+                height: MediaQuery.sizeOf(context).height -
+                    MediaQuery.paddingOf(context).bottom,
+                fit: widget.data.videoController.player.state.height! <= 720
+                    ? BoxFit.fitWidth
+                    : BoxFit.fitHeight,
+                controller: widget.data.videoController,
+                controls: (state) {
+                  return GestureDetector(
+                    onTap: () {
+                      state.widget.controller.player.playOrPause();
+                      setState(() {
+                        isControlsVisible = true;
+                      });
+                      if (!state.widget.controller.player.state.playing) {
+                        Future.delayed(Duration(seconds: 2), () {
+                          setState(() {
+                            isControlsVisible = false;
+                          });
+                        });
+                      }
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      padding: EdgeInsets.all(16),
+                      child: AnimatedOpacity(
+                          opacity: isControlsVisible ? 1.0 : 0.0,
+                          duration: Duration(milliseconds: 250),
+                          child: Icon(
+                            state.widget.controller.player.state.playing
+                                ? Icons.pause
+                                : Icons.play_arrow,
+                            color: Colors.white,
+                            size: 48,
+                          )),
+                    ),
+                  );
+                },
               );
               if (widget.videoBuilder != null) {
                 return widget.videoBuilder!(

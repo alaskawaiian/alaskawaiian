@@ -15,19 +15,6 @@ class ShortsController extends ValueNotifier<ShortsState> with VideoControls {
   final VideoSourceController _youtubeVideoInfoService;
   final VideoControllerConfiguration _defaultVideoControllerConfiguration;
 
-  /// * [youtubeVideoSourceController] controller can be one of two constructors:
-  ///     1. [VideosSourceController.fromUrlList]
-  ///     2. [VideosSourceController.fromYoutubeChannelName]
-  ///
-  /// * If [startWithAutoplay] is true, the current focused video
-  /// will start playing right after is dependencies are ready.
-  /// Will start paused otherwise.
-  ///
-  /// * If [startWithAutoplay] is true, the videos will `repeat`
-  /// from start when finalized. Will pause after done otherwise.
-  ///
-  /// * [VideoControllerConfiguration] is the configuration of [VideoController]
-  /// of [media_kit](https://pub.dev/packages/media_kit).
   ShortsController({
     List<int> indexsWhereWillContainAds = const [],
     required VideoSourceController youtubeVideoSourceController,
@@ -51,7 +38,7 @@ class ShortsController extends ValueNotifier<ShortsState> with VideoControls {
   int currentIndex = -1;
 
   /// Will notify the controller that the current index has changed.
-  /// This will trigger the preload of the previus 3 and next 3 videos.
+  /// This will trigger the preload of the previous 3 and next 3 videos.
   void notifyCurrentIndex(
     int newIndex, {
     OnNotifyCallback? onPrevVideoPause,
@@ -103,14 +90,14 @@ class ShortsController extends ValueNotifier<ShortsState> with VideoControls {
     }
   }
 
-  int get maxLenght {
+  int get maxLength {
     return _indexToSource.length;
   }
 
   final UnmodifiableListView<int> indexsWhereWillContainAds;
   final Map<int, int?> _indexToSource = {};
 
-  /// Will load the previus 3 and next 3 videos.
+  /// Will load the previous 3 and next 3 videos.
   Future<void> _preloadVideos() async {
     try {
       return _lock.synchronized(() async {
@@ -129,28 +116,13 @@ class ShortsController extends ValueNotifier<ShortsState> with VideoControls {
           _getMapEntryFromIndex(videos, currentIndex + 3),
         ];
 
-        // Add in state the 3 previus videos and the 3 next videos
+        // Add in state the 3 previous videos and the 3 next videos
         final focusedItems = [
           ...previus3Ids,
           _getMapEntryFromIndex(videos, currentIndex), // Current index
           ...next3Ids,
         ];
 
-        // We are fetching one video at a time. So in order to
-        // start fetching a video we need first to fisnish fetching
-        // the current one.
-        //
-        // So what videos should we fetch first? Let's define a fetch order.
-        //
-        // The normal order of indexes of the list is:
-        // [1, 2, 3, 4, 5, 6, 7]
-        // If the current index is, for example, 4, the list will be:
-        // We want to fetch first the fourth video because it is the
-        // current selected one so it is prioritary.
-        // Then, we will fetch the posterior videos because user tipically
-        // scrolls more down then up. So let's fetch them first.
-        // And only then, fetch the videos that are before the current index.
-        // Now, the new list is: [4, 5, 6, 7, 1, 2, 3]
         final targetIndex =
             focusedItems.indexWhere((e) => e.key == currentIndex);
 
@@ -309,109 +281,3 @@ class ShortsController extends ValueNotifier<ShortsState> with VideoControls {
     });
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-1 Role
-quantityAds = 1 (for each 3)
-adsIn: [3]
-memory (0,1,2,3)
-service(0,1,2)
-
-2 Role
-quantityAds = 1 (for each 3)
-adsIn: [3]
-memory (0,1,2,3,4)
-service(0,1,2,3)
-
-3 Role
-quantityAds = 1 (for each 3)
-adsIn: [3]
-memory (0,1,2,3,4,5)
-service(0,1,2,3,4)
-
-4 Role
-quantityAds = 1 (for each 3)
-adsIn: [3]
-memory (0,1,2,3,4,5,6)
-service(0,1,2,3,4,5)
-
-5 Role
-quantityAds = 2 (for each 3)
-adsIn: [3,7]
-memory (1,2,3,4,5,6,7)
-service(0,1,2,3,4,5)
-
-6 Role
-quantityAds = 2 (for each 3)
-adsIn: [3,7]
-memory (2,3,4,5,6,7,8)
-service(0,1,2,3,4,5,6)
-
-7 Role
-quantityAds = 2 (for each 3)
-adsIn: [3,7]
-memory (3,4,5,6,7,8,9)
-service(0,1,2,3,4,5,6,7)
-
-8 Role
-quantityAds = 2 (for each 3)
-adsIn: [3,7]
-memory (4,5,6,7,8,9,10)
-service(0,1,2,3,4,5,6,7,8)
-
-9 Role
-quantityAds = 3 (for each 3)
-adsIn: [3,7,11]
-memory (5,6,7,8,9,10,11)
-service(0,1,2,3,4,5,6,7,8)
-
-10 Role
-quantityAds = 3 (for each 3)
-adsIn: [3,7,11]
-memory (6,7,8,9,10,11,12)
-service(0,1,2,3,4,5,6,7,8,9)
-
-11 Role
-quantityAds = 3 (for each 3)
-adsIn: [3,7,11]
-memory (7,8,9,10,11,12,13)
-service(0,1,2,3,4,5,6,7,8,9,10)
-
-12 Role
-quantityAds = 3 (for each 3)
-adsIn: [3,7,11]
-memory (8,9,10,11,12,13,14)
-service(0,1,2,3,4,5,6,7,8,9,10,11)
-
-13 Role
-quantityAds = 4 (for each 3)
-adsIn: [3,7,11,15]
-memory (9,10,11,12,13,14,15)
-service(0,1,2,3,4,5,6,7,8,9,10,11)
-*/

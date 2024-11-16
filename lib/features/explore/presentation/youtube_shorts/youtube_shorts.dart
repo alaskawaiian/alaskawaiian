@@ -140,9 +140,9 @@ class _YoutubeShortsPageState extends State<YoutubeShorts> {
         itemBuilder: (context, index) {
           final bool isSelectedIndex = widget.controller.currentIndex == index;
 
-          final int maxLenght = widget.controller.maxLenght;
-          final bool isIndexBellowMaxLenght = index >= maxLenght;
-          if (!isSelectedIndex && isIndexBellowMaxLenght) return null;
+          final int maxLength = widget.controller.maxLength;
+          final bool isIndexBelowMaxLength = index >= maxLength;
+          if (!isSelectedIndex && isIndexBelowMaxLength) return null;
           final data = widget.controller.getVideoInIndex(index);
           if (data is ShortsVideoData) {
             return VideoCompleterFutureBuilder(

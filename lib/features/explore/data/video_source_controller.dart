@@ -44,8 +44,7 @@ abstract class VideoSourceController {
         await YoutubeExplode().videos.streamsClient.getManifest(videoId);
     AudioOnlyStreamInfo audioInfo = streamInfo.audioOnly.last;
     VideoOnlyStreamInfo videoInfo = streamInfo.videoOnly.firstWhere(
-        (video) =>
-            video.qualityLabel == '1080p' || video.qualityLabel == '720p',
+        (video) => (video.qualityLabel == '720p'),
         orElse: () => streamInfo.videoOnly.last);
 
     return MuxedStreamInfo(
