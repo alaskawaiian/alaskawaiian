@@ -1,19 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:starter_architecture_flutter_firebase/features/explore/presentation/explore_button.dart';
 import 'package:starter_architecture_flutter_firebase/features/explore/presentation/explore_video.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ExplorePost extends StatelessWidget {
   final String place;
   final String caption;
   final String hashtags;
   final String videoURL;
+  final String airlineURL;
 
-  ExplorePost({
-    required this.place,
-    required this.caption,
-    required this.hashtags,
-    required this.videoURL,
-  });
+  const ExplorePost(
+      {required this.place,
+      required this.caption,
+      required this.hashtags,
+      required this.videoURL,
+      required this.airlineURL});
+
+  Future<void> _launchUrl() async {
+    final Uri url = Uri.parse(airlineURL);
+
+    try {
+      if (await launchUrl(url)) {
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +37,7 @@ class ExplorePost extends StatelessWidget {
         body: Stack(children: [
           // the user's post
           ExploreVideo(videoURL: videoURL),
+
           // the user's name and the post caption
           SafeArea(
             child: Padding(
@@ -32,16 +48,31 @@ class ExplorePost extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      // MaterialBanner(
-                      //   content: Text("Book a flight!"),
-                      //   actions: <Widget>[
-                      //     TextButton(onPressed: null, child: Text('OPEN')),
-                      //     TextButton(
-                      //       onPressed: null,
-                      //       child: Text('DISMISS'),
-                      //     ),
-                      //   ],
-                      // ),
+                      // book a flight
+                      GestureDetector(
+                        onTap: _launchUrl,
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Book a Flight! ',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15),
+                              ),
+                              Icon(
+                                Icons.flight,
+                                size: 15,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                       // the user's name
                       Text(place,
                           style: TextStyle(

@@ -23,17 +23,20 @@ class _ExplorePageState extends State<ExplorePage> {
               place: 'Aloha Stadium - Oahu, HI',
               caption: 'Aloha Stadium Swap Meet on Oahu!',
               hashtags: '#hawaii #supportlocal',
-              videoURL: 'assets/videos/tiktok-aloha-stadium.MP4'),
+              videoURL: 'assets/videos/tiktok-aloha-stadium.MP4',
+              airlineURL: 'https://www.hawaiianairlines.com/'),
           ExplorePost(
               place: 'Oahu, HI',
               caption: 'moving postcards from oahu',
               hashtags: '#hawaii',
-              videoURL: 'assets/videos/tiktok-hawaii.MP4'),
+              videoURL: 'assets/videos/tiktok-hawaii.MP4',
+              airlineURL: 'https://www.hawaiianairlines.com/'),
           ExplorePost(
               place: 'Alaska',
               caption: 'Alaska feels like a different planet.',
               hashtags: '#alaskawaiian #alaska',
-              videoURL: 'assets/videos/tiktok-alaska.MP4'),
+              videoURL: 'assets/videos/tiktok-alaska.MP4',
+              airlineURL: 'https://www.alaskaair.com/'),
         ]));
   }
 }
