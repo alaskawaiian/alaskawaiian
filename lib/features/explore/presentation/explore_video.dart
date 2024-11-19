@@ -5,7 +5,7 @@ import 'package:video_player/video_player.dart';
 class ExploreVideo extends StatefulWidget {
   final String videoURL;
 
-  ExploreVideo({required this.videoURL});
+  const ExploreVideo({required this.videoURL});
 
   @override
   _ExploreVideoState createState() => _ExploreVideoState();
@@ -26,18 +26,32 @@ class _ExploreVideoState extends State<ExploreVideo> {
       });
   }
 
+  void _videoPlayPause() {
+    setState(() {
+      if (_controller.value.isPlaying) {
+        _controller.pause();
+      } else {
+        _controller.play();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: AspectRatio(
-        aspectRatio: _controller.value.aspectRatio,
-        child: VideoPlayer(_controller),
+    return GestureDetector(
+      onTap: _videoPlayPause,
+      child: Center(
+        child: AspectRatio(
+          aspectRatio: _controller.value.aspectRatio,
+          child: VideoPlayer(_controller),
+        ),
       ),
     );
   }
 
   @override
   void dispose() {
+    _controller.pause();
     _controller.dispose();
     super.dispose();
   }
