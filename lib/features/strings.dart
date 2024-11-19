@@ -29,4 +29,7 @@ class Strings {
 
   // Tiers page
   static const String tiers = 'Tiers';
+
+  // Explore page
+  static const String explorePage = 'Explore';
 }

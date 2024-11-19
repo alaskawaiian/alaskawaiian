@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:starter_architecture_flutter_firebase/features/tiers/presentation/tiers.dart';
 
 import '../../account/presentation/account_page.dart';
+import '../../explore/presentation/explore_page.dart';
 import '../../question/presentation/questions_page.dart';
 import 'cupertino_home_scaffold.dart';
 import 'tab_item.dart';
@@ -19,8 +20,9 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   TabItem _currentTab = TabItem.questions;
 
-  final Map<TabItem,  GlobalKey<NavigatorState>> navigatorKeys = {
+  final Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
     TabItem.questions: GlobalKey<NavigatorState>(),
+    TabItem.explore: GlobalKey<NavigatorState>(),
     TabItem.tiers: GlobalKey<NavigatorState>(),
     TabItem.account: GlobalKey<NavigatorState>(),
   };
@@ -28,6 +30,7 @@ class HomePageState extends State<HomePage> {
   Map<TabItem, WidgetBuilder> get widgetBuilders {
     return {
       TabItem.questions: (_) => QuestionsPage(),
+      TabItem.explore: (_) => ExplorePage(),
       TabItem.tiers: (_) => Tiers(),
       TabItem.account: (_) => AccountPage(),
     };
