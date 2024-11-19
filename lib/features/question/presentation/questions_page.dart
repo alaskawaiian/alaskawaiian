@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '/features/custom_colors.dart';
 import '../../user/data/user_database_provider.dart';
 import '../../user/domain/user.dart';
 import '../data/question_database_providers.dart';
@@ -58,15 +57,10 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [hawaiianPink, alaskaBlue],
+                    colors: [Colors.blue[900]!, Colors.black],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.2),
                 ),
               ),
               Positioned(
