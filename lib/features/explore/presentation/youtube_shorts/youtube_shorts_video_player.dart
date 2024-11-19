@@ -66,7 +66,8 @@ class _YoutubeShortsVideoPlayerState extends State<YoutubeShortsVideoPlayer>
               final videoPlayer = media_kit.Video(
                 height: MediaQuery.sizeOf(context).height -
                     MediaQuery.paddingOf(context).bottom,
-                fit: widget.data.videoController.player.state.height! <= 720
+                fit: (widget.data.videoController.player.state.height ?? 720) <=
+                        720
                     ? BoxFit.fitWidth
                     : BoxFit.fitHeight,
                 controller: widget.data.videoController,

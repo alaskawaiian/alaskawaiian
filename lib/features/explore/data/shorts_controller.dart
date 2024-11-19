@@ -8,9 +8,7 @@ import '../domain/shorts_state.dart';
 import 'package:synchronized/synchronized.dart';
 import 'video_source_controller.dart';
 
-part 'video_controls.dart';
-
-class ShortsController extends ValueNotifier<ShortsState> with VideoControls {
+class ShortsController extends ValueNotifier<ShortsState> {
   final Lock _lock;
   final VideoSourceController _youtubeVideoInfoService;
   final VideoControllerConfiguration _defaultVideoControllerConfiguration;
@@ -33,8 +31,6 @@ class ShortsController extends ValueNotifier<ShortsState> with VideoControls {
   }
 
   int prevIndex = -1;
-
-  @override
   int currentIndex = -1;
 
   /// Will notify the controller that the current index has changed.
@@ -243,7 +239,6 @@ class ShortsController extends ValueNotifier<ShortsState> with VideoControls {
     return currentState.videos[index];
   }
 
-  @override
   ShortsStateWithData? _getCurrentState() {
     if (value is ShortsStateWithData) {
       final ShortsStateWithData currentValue = (value as ShortsStateWithData);

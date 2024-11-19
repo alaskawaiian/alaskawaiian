@@ -11,13 +11,16 @@ class ExplorePost extends StatelessWidget {
       {required this.author, required this.description, required this.child});
 
   Future<void> _launchUrl() async {
-    final Uri url = Uri.parse(airlineURL);
+    Uri? url;
+
+    if (author == 'Hawaiian Airlines') {
+      url = Uri.parse('https://www.hawaiianairlines.com/');
+    } else if (author == 'Alaska Airlines') {
+      url = Uri.parse('https://www.alaskaair.com/');
+    }
 
     try {
-      if (await launchUrl(url)) {
-      } else {
-        throw 'Could not launch $url';
-      }
+      await launchUrl(url!);
     } catch (e) {
       print('Error: $e');
     }
@@ -29,7 +32,7 @@ class ExplorePost extends StatelessWidget {
         backgroundColor: Colors.black,
         body: Stack(children: [
           // the user's post
-          ExploreVideo(videoURL: videoURL),
+          child,
 
           // the user's name and the post caption
           SafeArea(
@@ -45,6 +48,7 @@ class ExplorePost extends StatelessWidget {
                       GestureDetector(
                         onTap: _launchUrl,
                         child: Container(
+                          margin: EdgeInsets.only(bottom: 10),
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: Colors.blue,
@@ -55,11 +59,11 @@ class ExplorePost extends StatelessWidget {
                               Text(
                                 'Book a Flight! ',
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 15),
+                                    color: Colors.white, fontSize: 16),
                               ),
                               Icon(
                                 Icons.flight,
-                                size: 15,
+                                size: 16,
                                 color: Colors.white,
                               ),
                             ],
@@ -67,7 +71,7 @@ class ExplorePost extends StatelessWidget {
                         ),
                       ),
                       // the user's name
-                      Text(place,
+                      Text(author,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
@@ -76,12 +80,11 @@ class ExplorePost extends StatelessWidget {
                       SizedBox(
                         height: 10,
                       ),
-                      Text(description,
-                          style: TextStyle(color: Colors.white, fontSize: 18)),
-                      // SizedBox(
-                      //   height: 10,
-                      // ),
-                      // Text("Book a flight!"),
+                      SizedBox(
+                          width: 324,
+                          child: Text(description,
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 16))),
                     ],
                   )),
             ),
