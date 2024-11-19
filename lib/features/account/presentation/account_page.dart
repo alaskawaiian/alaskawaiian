@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:starter_architecture_flutter_firebase/features/custom_colors.dart';
 
 import '../../../repositories/firestore/firestore_providers.dart';
 import '../../show_alert_dialog.dart';
@@ -56,7 +57,7 @@ class AccountPage extends ConsumerWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.blue[500]!, Colors.blue[900]!],
+                  colors: [hawaiianPink, alaskaBlue],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
