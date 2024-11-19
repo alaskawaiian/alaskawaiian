@@ -63,7 +63,6 @@ class DefaultFirebaseOptions {
     appId: '1:920051944111:android:b0ae24b14dcb33f5f8225a',
     messagingSenderId: '920051944111',
     projectId: 'alaskawaiian',
-    storageBucket: 'alaskawaiian.firebasestorage.app',
+    storageBucket: 'alaskawaiian.appspot.com',
   );
-
 }
