@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../repositories/firestore/firestore_providers.dart';
-import '../../keys.dart';
+import '/features/custom_colors.dart';
 import '../../show_alert_dialog.dart';
 import '../../show_exception_alert_dialog.dart';
 import '../../strings.dart';
@@ -55,7 +55,7 @@ class AccountPage extends ConsumerWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.blue[500]!, Colors.blue[900]!],
+                  colors: [hawaiianPink, alaskaBlue],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
@@ -81,6 +81,11 @@ class AccountPage extends ConsumerWidget {
                 ],
               ),
             ),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.2),
+              ),
+            ),
             const SizedBox(height: 20),
             _buildInfoCard(
               icon: Icons.trending_up,
@@ -90,7 +95,7 @@ class AccountPage extends ConsumerWidget {
             _buildInfoCard(
               icon: Icons.directions_walk,
               label: 'Miles/Points',
-              value: '120 miles',
+              value: '1250 miles',
             ),
             _buildInfoCard(
               icon: Icons.person,

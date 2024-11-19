@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:starter_architecture_flutter_firebase/features/keys.dart';
 import 'package:starter_architecture_flutter_firebase/features/strings.dart';
 
-<<<<<<< Updated upstream
-enum TabItem { questions, account,  }
-=======
-enum TabItem { jobs, entries, account, tiers }
->>>>>>> Stashed changes
+enum TabItem { questions, tiers, account }
 
 /// Implements the key, title, and icon associated with the Jobs, Entrys, and
 /// Account pages.
@@ -24,15 +20,15 @@ class TabItemData {
       title: Strings.questions,
       icon: Icons.quiz,
     ),
-    TabItem.account: TabItemData(
-      key: Keys.accountTab,
-      title: Strings.account,
-      icon: Icons.person,
-    ),
     TabItem.tiers: TabItemData(
       key: Keys.tiersTab,
       title: Strings.tiers,
       icon: Icons.star,
+    ),
+    TabItem.account: TabItemData(
+      key: Keys.accountTab,
+      title: Strings.account,
+      icon: Icons.person,
     ),
   };
 }

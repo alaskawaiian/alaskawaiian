@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:starter_architecture_flutter_firebase/features/tiers/presentation/tiers.dart';
 
 import 'features/app_router.dart';
 import 'features/authorization/presentation/auth_widget.dart';
@@ -52,7 +51,7 @@ class MyApp extends ConsumerWidget {
       home: AuthWidget(
         nonSignedInBuilder: (_) => Consumer(
           builder: (context, ref, _) {
-            return HomePage();
+            return OnboardingPage();
           },
         ),
         signedInBuilder: (_) => HomePage(),

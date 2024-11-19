@@ -5,6 +5,7 @@ import '../../user/domain/user.dart';
 import '../../user/data/user_database_provider.dart';
 import '../data/question_database_providers.dart';
 import '../domain/question.dart';
+import '/features/custom_colors.dart';
 
 class QuestionsPage extends ConsumerStatefulWidget {
   @override
@@ -56,10 +57,15 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.blue[900]!, Colors.black],
+                    colors: [hawaiianPink, alaskaBlue],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   ),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.2),
                 ),
               ),
               Positioned(
