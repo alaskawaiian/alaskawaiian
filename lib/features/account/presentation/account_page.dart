@@ -4,11 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '/features/custom_colors.dart';
 import '../../../repositories/firestore/firestore_providers.dart';
 import '../../show_alert_dialog.dart';
 import '../../show_exception_alert_dialog.dart';
 import '../../strings.dart';
-import '../../user/data/user_database_provider.dart';
 import 'avatar.dart';
 
 class AccountPage extends ConsumerWidget {
@@ -45,7 +45,6 @@ class AccountPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final firebaseAuth = ref.watch(firebaseAuthProvider);
     final user = firebaseAuth.currentUser!;
-    final userStream = ref.watch(userStreamProvider);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -56,7 +55,7 @@ class AccountPage extends ConsumerWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.blue[500]!, Colors.blue[900]!],
+                  colors: [hawaiianPink, alaskaBlue],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
@@ -82,28 +81,21 @@ class AccountPage extends ConsumerWidget {
                 ],
               ),
             ),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.2),
+              ),
+            ),
             const SizedBox(height: 20),
-            userStream.when(
-              data: (userData) => _buildInfoCard(
-                icon: Icons.trending_up,
-                label: 'Streak',
-                value: '${userData.streak} days',
-              ),
-              loading: () => _buildInfoCard(
-                icon: Icons.trending_up,
-                label: 'Streak',
-                value: 'Loading...',
-              ),
-              error: (error, stack) => _buildInfoCard(
-                icon: Icons.trending_up,
-                label: 'Streak',
-                value: 'Error loading streak',
-              ),
+            _buildInfoCard(
+              icon: Icons.trending_up,
+              label: 'Streak',
+              value: '5 days',
             ),
             _buildInfoCard(
               icon: Icons.directions_walk,
               label: 'Miles/Points',
-              value: '120 miles',
+              value: '1250 miles',
             ),
             _buildInfoCard(
               icon: Icons.person,
