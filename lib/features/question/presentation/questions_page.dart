@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:starter_architecture_flutter_firebase/features/custom_colors.dart';
 
+import '/features/custom_colors.dart';
 import '../../user/data/user_database_provider.dart';
 import '../../user/domain/user.dart';
 import '../data/question_database_providers.dart';
@@ -58,10 +60,15 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
                 Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Colors.blue[900]!, Colors.black],
+                      colors: [hawaiianPink, alaskaBlue],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.2),
                   ),
                 ),
                 Positioned(
@@ -108,81 +115,81 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
                           width: double.infinity,
                           child: user.requireValue.hasAnswered()
                               ? Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'You have already answered today\'s question!',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 25.0,
-                                            color: Colors.black),
-                                      ),
-                                      SizedBox(height: 20.0),
-                                      Text(
-                                        'Come back tomorrow for a new question!',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            color: Colors.black87),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              : Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Text(
-                                      question.question,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: 'Jomolhari',
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 20.0),
-                                    Expanded(
-                                      child: GridView.builder(
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          childAspectRatio: 1,
-                                          crossAxisSpacing: 10.0,
-                                          mainAxisSpacing: 10.0,
-                                        ),
-                                        itemCount: 4,
-                                        itemBuilder: (context, index) {
-                                          return Card(
-                                            color: Colors.grey[200],
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                            ),
-                                            elevation: 3.0,
-                                            child: InkWell(
-                                              onTap: () {
-                                                answerQuestion(index);
-                                              },
-                                              child: Center(
-                                                child: Text(
-                                                  question.choices[index],
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontSize: 15.0,
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ],
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'You have already answered today\'s question!',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 25.0,
+                                      color: Colors.black),
                                 ),
+                                SizedBox(height: 20.0),
+                                Text(
+                                  'Come back tomorrow for a new question!',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.black87),
+                                ),
+                              ],
+                            ),
+                          )
+                              : Column(
+                            crossAxisAlignment:
+                            CrossAxisAlignment.stretch,
+                            children: [
+                              Text(
+                                question.question,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Jomolhari',
+                                  color: Colors.black,
+                                ),
+                              ),
+                              const SizedBox(height: 20.0),
+                              Expanded(
+                                child: GridView.builder(
+                                  gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    childAspectRatio: 1,
+                                    crossAxisSpacing: 10.0,
+                                    mainAxisSpacing: 10.0,
+                                  ),
+                                  itemCount: 4,
+                                  itemBuilder: (context, index) {
+                                    return Card(
+                                      color: Colors.grey[200],
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(12.0),
+                                      ),
+                                      elevation: 3.0,
+                                      child: InkWell(
+                                        onTap: () {
+                                          answerQuestion(index);
+                                        },
+                                        child: Center(
+                                          child: Text(
+                                            question.choices[index],
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
