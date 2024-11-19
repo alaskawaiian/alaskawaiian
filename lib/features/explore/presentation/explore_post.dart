@@ -1,30 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:starter_architecture_flutter_firebase/features/explore/presentation/explore_button.dart';
-import 'package:starter_architecture_flutter_firebase/features/explore/presentation/explore_video.dart';
+import './explore_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ExplorePost extends StatelessWidget {
-  final String place;
-  final String caption;
-  final String hashtags;
-  final String videoURL;
-  final String airlineURL;
+  final String author;
+  final String description;
+  final Widget child;
 
   const ExplorePost(
-      {required this.place,
-      required this.caption,
-      required this.hashtags,
-      required this.videoURL,
-      required this.airlineURL});
+      {required this.author, required this.description, required this.child});
 
   Future<void> _launchUrl() async {
-    final Uri url = Uri.parse(airlineURL);
+    Uri? url;
+
+    if (author == 'Hawaiian Airlines') {
+      url = Uri.parse('https://www.hawaiianairlines.com/');
+    } else if (author == 'Alaska Airlines') {
+      url = Uri.parse('https://www.alaskaair.com/');
+    }
 
     try {
-      if (await launchUrl(url)) {
-      } else {
-        throw 'Could not launch $url';
-      }
+      await launchUrl(url!);
     } catch (e) {
       print('Error: $e');
     }
@@ -36,7 +32,7 @@ class ExplorePost extends StatelessWidget {
         backgroundColor: Colors.black,
         body: Stack(children: [
           // the user's post
-          ExploreVideo(videoURL: videoURL),
+          child,
 
           // the user's name and the post caption
           SafeArea(
@@ -52,6 +48,7 @@ class ExplorePost extends StatelessWidget {
                       GestureDetector(
                         onTap: _launchUrl,
                         child: Container(
+                          margin: EdgeInsets.only(bottom: 10),
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: Colors.blue,
@@ -62,11 +59,11 @@ class ExplorePost extends StatelessWidget {
                               Text(
                                 'Book a Flight! ',
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 15),
+                                    color: Colors.white, fontSize: 16),
                               ),
                               Icon(
                                 Icons.flight,
-                                size: 15,
+                                size: 16,
                                 color: Colors.white,
                               ),
                             ],
@@ -74,37 +71,20 @@ class ExplorePost extends StatelessWidget {
                         ),
                       ),
                       // the user's name
-                      Text(place,
+                      Text(author,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            fontSize: 15,
+                            fontSize: 16,
                           )),
                       SizedBox(
                         height: 10,
                       ),
-                      RichText(
-                          text: TextSpan(children: [
-                        // caption
-                        TextSpan(
-                          text: caption,
-                          style: DefaultTextStyle.of(context).style.copyWith(
-                                color: Colors.white,
-                              ),
-                        ),
-                        // hashtags
-                        TextSpan(
-                          text: ' $hashtags',
-                          style: DefaultTextStyle.of(context).style.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                        ),
-                      ])),
-                      // SizedBox(
-                      //   height: 10,
-                      // ),
-                      // Text("Book a flight!"),
+                      SizedBox(
+                          width: 324,
+                          child: Text(description,
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 16))),
                     ],
                   )),
             ),

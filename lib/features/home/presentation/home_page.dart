@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:starter_architecture_flutter_firebase/features/tiers/presentation/tiers.dart';
+import '../../tiers/presentation/tiers.dart';
 
 import '../../account/presentation/account_page.dart';
 import '../../explore/presentation/explore_page.dart';

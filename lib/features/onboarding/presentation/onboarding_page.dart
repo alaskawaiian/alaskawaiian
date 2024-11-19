@@ -2,19 +2,18 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:starter_architecture_flutter_firebase/features/app_router.dart';
-import 'package:starter_architecture_flutter_firebase/features/keys.dart';
-import 'package:starter_architecture_flutter_firebase/features/strings.dart';
-import 'package:starter_architecture_flutter_firebase/repositories/firestore/firestore_providers.dart';
+import '../../app_router.dart';
+import '../../keys.dart';
+import '../../strings.dart';
+import '../../../repositories/firestore/firestore_providers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 
 import '../../show_exception_alert_dialog.dart';
 import '../../authorization/presentation/sign_in/sign_in_view_model.dart';
 
 /// Manages access to [SignInViewModel].
 final signInModelProvider = ChangeNotifierProvider<SignInViewModel>(
-      (ref) => SignInViewModel(auth: ref.watch(firebaseAuthProvider)),
+  (ref) => SignInViewModel(auth: ref.watch(firebaseAuthProvider)),
 );
 
 class OnboardingPage extends ConsumerWidget {
@@ -140,8 +139,8 @@ class SignInPageContents extends StatelessWidget {
                         onPressed: viewModel.isLoading
                             ? null
                             : () {
-                          _showEmailPasswordSignInPage(context);
-                        },
+                                _showEmailPasswordSignInPage(context);
+                              },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue[900],
                           foregroundColor: Colors.white,

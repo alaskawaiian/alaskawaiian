@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-
-import 'explore_post.dart';
+import 'package:media_kit_video/media_kit_video.dart' hide Video;
+import '../data/shorts_controller.dart';
+import '../data/video_source_controller.dart';
+import './explore_post.dart';
+import '../../../youtube_explode_fork/youtube_explode_dart.dart';
+import 'youtube_shorts/youtube_shorts.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({Key? key}) : super(key: key);
@@ -10,33 +14,42 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExplorePageState extends State<ExplorePage> {
-  final _controller = PageController(initialPage: 0);
+  late final ShortsController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = ShortsController(
+        videosWillBeInLoop: false,
+        youtubeVideoSourceController: VideoSourceController.fromYoutubeChannels(
+            channelNames: ['@AlaskaAirlines', '@HawaiianAirlines']));
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: PageView(
-            controller: _controller,
-            scrollDirection: Axis.vertical,
-            children: [
-          ExplorePost(
-              place: 'Aloha Stadium - Oahu, HI',
-              caption: 'Aloha Stadium Swap Meet on Oahu!',
-              hashtags: '#hawaii #supportlocal',
-              videoURL: 'assets/videos/tiktok-aloha-stadium.MP4',
-              airlineURL: 'https://www.hawaiianairlines.com/'),
-          ExplorePost(
-              place: 'Oahu, HI',
-              caption: 'moving postcards from oahu',
-              hashtags: '#hawaii',
-              videoURL: 'assets/videos/tiktok-hawaii.MP4',
-              airlineURL: 'https://www.hawaiianairlines.com/'),
-          ExplorePost(
-              place: 'Alaska',
-              caption: 'Alaska feels like a different planet.',
-              hashtags: '#alaskawaiian #alaska',
-              videoURL: 'assets/videos/tiktok-alaska.MP4',
-              airlineURL: 'https://www.alaskaair.com/'),
-        ]));
+    return YoutubeShorts(
+      controller: _controller,
+      videoBuilder: (
+        int index,
+        PageController pageController,
+        VideoController videoController,
+        Video videoData,
+        MuxedStreamInfo hostedVideoInfo,
+        Widget child,
+      ) {
+        return ExplorePost(
+            author: videoData.author,
+            description: videoData.description == ''
+                ? videoData.title
+                : videoData.description,
+            child: child);
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

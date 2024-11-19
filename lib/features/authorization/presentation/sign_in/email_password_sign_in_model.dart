@@ -21,7 +21,8 @@ class EmailAndPasswordValidators {
   final StringValidator displayNameValidator = MinLengthStringValidator(3);
 }
 
-class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
+class EmailPasswordSignInModel extends EmailAndPasswordValidators
+    with ChangeNotifier {
   EmailPasswordSignInModel({
     required this.firebaseAuth,
     this.email = '',
@@ -53,8 +54,8 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
               EmailAuthProvider.credential(email: email, password: password));
           break;
         case EmailPasswordSignInFormType.register:
-          UserCredential userCredential = await firebaseAuth.createUserWithEmailAndPassword(
-              email: email, password: password);
+          UserCredential userCredential = await firebaseAuth
+              .createUserWithEmailAndPassword(email: email, password: password);
           await userCredential.user!.updateDisplayName(displayName);
           await UserDatabase(uid: userCredential.user!.uid).initUser();
           break;
@@ -74,7 +75,8 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
 
   void updatePassword(String password) => updateWith(password: password);
 
-  void updateDisplayName(String displayName) => updateWith(displayName: displayName);
+  void updateDisplayName(String displayName) =>
+      updateWith(displayName: displayName);
 
   void updateFormType(EmailPasswordSignInFormType formType) {
     updateWith(
@@ -183,7 +185,8 @@ class EmailPasswordSignInModel with EmailAndPasswordValidators, ChangeNotifier {
     if (formType == EmailPasswordSignInFormType.forgotPassword) {
       canSubmitFields = canSubmitEmail;
     } else if (formType == EmailPasswordSignInFormType.register) {
-      canSubmitFields = canSubmitEmail && canSubmitPassword && canSubmitDisplayName;
+      canSubmitFields =
+          canSubmitEmail && canSubmitPassword && canSubmitDisplayName;
     } else {
       canSubmitFields = canSubmitEmail && canSubmitPassword;
     }
