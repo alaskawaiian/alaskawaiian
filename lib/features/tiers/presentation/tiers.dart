@@ -98,150 +98,157 @@ class TierCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [hawaiianPink, alaskaBlue],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [hawaiianPink, alaskaBlue],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(150.0),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                ),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Tiers',
+                        style: TextStyle(
+                          fontSize: 28.0,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Jomolhari',
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      Text(
+                        'Current Points: $points points',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.white70,
+                          fontFamily: 'Jomolhari',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.2),
-          ),
-        ),
-        Positioned(
-            top: 45.0,
-            left: 20.0,
+          body: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  'Tiers',
-                  style: TextStyle(
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'Jomolhari',
+                Card(
                     color: Colors.white,
-                  ),
-                ),
-                SizedBox(height: 8.0),
-                Text(
-                  'Current Points: $points points',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.white70,
-                    fontFamily: 'Jomolhari',
-                  ),
-                ),
-              ],
-            )),
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Card(
-                  color: Colors.white,
-                  margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  elevation: 4.0,
-                  child: Container(
-                    padding: const EdgeInsets.all(16.0),
-                    height: 630,
-                    width: double.infinity,
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              tier.tierName,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: tier.benefits
-                                .map((benefit) => Text(benefit))
-                                .toList(),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                    margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    elevation: 4.0,
+                    child: Container(
+                      padding: const EdgeInsets.all(16.0),
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      width: double.infinity,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                '$nextPoints points',
+                                tier.tierName,
                                 style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black54,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                        SizedBox(height: 10),
-                        LinearProgressIndicator(
-                          value: progress,
-                          color: tier.color,
-                          backgroundColor: tier.color.withOpacity(0.5),
-                        ),
-                        SizedBox(height: 30),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Benefits Information',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
+                          SizedBox(height: 10),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: tier.benefits
+                                  .map((benefit) => Text(benefit))
+                                  .toList(),
                             ),
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[
-                            const SizedBox(height: 16.0),
-                            if (tier.tierName == 'Ocean') ...[
-                              Expanded(child: _buildOcean())
+                          ),
+                          SizedBox(height: 10),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  '$nextPoints points',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black54,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          LinearProgressIndicator(
+                            value: progress,
+                            color: tier.color,
+                            backgroundColor: tier.color.withOpacity(0.5),
+                          ),
+                          SizedBox(height: 30),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Benefits Information',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
                             ],
-                            if (tier.tierName == 'Land') ...[
-                              Expanded(child: _buildLand())
-                            ],
-                            if (tier.tierName == 'Mountain') ...[
-                              Expanded(child: _buildMountain())
-                            ],
-                            if (tier.tierName == 'Sky') ...[
-                              Expanded(child: _buildSky())
-                            ],
-                          ],
-                        )
-                      ],
-                    ),
-                  )),
-            ],
+                          ),
+                          Expanded(
+                            child: Row(
+                              children: <Widget>[
+                                if (tier.tierName == 'Ocean') ...[
+                                  Expanded(child: _buildOcean())
+                                ],
+                                if (tier.tierName == 'Land') ...[
+                                  Expanded(child: _buildLand())
+                                ],
+                                if (tier.tierName == 'Mountain') ...[
+                                  Expanded(child: _buildMountain())
+                                ],
+                                if (tier.tierName == 'Sky') ...[
+                                  Expanded(child: _buildSky())
+                                ],
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
-    ));
+      )
+    );
   }
 }
 
