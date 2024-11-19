@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:starter_architecture_flutter_firebase/features/custom_colors.dart';
 
-import '../../user/domain/user.dart';
 import '../../user/data/user_database_provider.dart';
+import '../../user/domain/user.dart';
 import '../data/question_database_providers.dart';
 import '../domain/question.dart';
-import '/features/custom_colors.dart';
 
 class QuestionsPage extends ConsumerStatefulWidget {
   @override
@@ -34,7 +34,9 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
           return AlertDialog(
             backgroundColor: Colors.white,
             surfaceTintColor: Colors.white,
-            title: Text(question.requireValue.answer == index ? 'Correct!' : 'Incorrect'),
+            title: Text(question.requireValue.answer == index
+                ? 'Correct!'
+                : 'Incorrect'),
             content: Text(question.requireValue.answer == index
                 ? 'You answered correctly and earned 1 mile!'
                 : 'Oops, that was not the right answer. The correct answer is "${question.requireValue.choices[question.requireValue.answer]}"'),
@@ -50,88 +52,87 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
     }
 
     return question.when(
-      data: (question) {
-        return Scaffold(
-          body: Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [hawaiianPink, alaskaBlue],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
+        data: (question) {
+          return Scaffold(
+            body: SafeArea(
+              child: Stack(children: [
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [hawaiianPink, alaskaBlue],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.2),
+                Positioned(
+                  top: 45.0,
+                  left: 20.0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Daily Questions',
+                        style: TextStyle(
+                          fontSize: 28.0,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Jomolhari',
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      Text(
+                        'Current Streak: ${user.requireValue.streak} days',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.white70,
+                          fontFamily: 'Jomolhari',
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Positioned(
-                top: 45.0,
-                left: 20.0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Daily Questions',
-                      style: TextStyle(
-                        fontSize: 28.0,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Jomolhari',
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Card(
                         color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(height: 8.0),
-                    Text(
-                      'Current Streak: ${user.requireValue.streak} days',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.white70,
-                        fontFamily: 'Jomolhari',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Card(
-                      color: Colors.white,
-                      margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                      elevation: 4.0,
-                      child: Container(
-                        padding: const EdgeInsets.all(16.0),
-                        height: 630,
-                        width: double.infinity,
-                        child:
-                        user.requireValue.hasAnswered() ?
-                          Center(
+                        margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        elevation: 4.0,
+                        child: Container(
+                          padding: const EdgeInsets.all(16.0),
+                          height: 630,
+                          width: double.infinity,
+                          child: user.requireValue.hasAnswered()
+                              ? Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   'You have already answered today\'s question!',
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 25.0, color: Colors.black),
+                                  style: TextStyle(
+                                      fontSize: 25.0,
+                                      color: Colors.black),
                                 ),
                                 SizedBox(height: 20.0),
                                 Text(
                                   'Come back tomorrow for a new question!',
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 16.0, color: Colors.black87),
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.black87),
                                 ),
                               ],
                             ),
-                          ) :
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                          )
+                              : Column(
+                            crossAxisAlignment:
+                            CrossAxisAlignment.stretch,
                             children: [
                               Text(
                                 question.question,
@@ -144,10 +145,10 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
                                 ),
                               ),
                               const SizedBox(height: 20.0),
-
                               Expanded(
                                 child: GridView.builder(
-                                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
                                     childAspectRatio: 1,
                                     crossAxisSpacing: 10.0,
@@ -158,7 +159,8 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
                                     return Card(
                                       color: Colors.grey[200],
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12.0),
+                                        borderRadius:
+                                        BorderRadius.circular(12.0),
                                       ),
                                       elevation: 3.0,
                                       child: InkWell(
@@ -182,17 +184,16 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
                               ),
                             ],
                           ),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ]
-          ),
-        );
-      },
-      loading: () => CircularProgressIndicator(),
-      error: (error, stack) => Text('Oops, something unexpected happened')
-    );
+              ]),
+            ),
+          );
+        },
+        loading: () => CircularProgressIndicator(),
+        error: (error, stack) => Text('Oops, something unexpected happened'));
   }
 }
