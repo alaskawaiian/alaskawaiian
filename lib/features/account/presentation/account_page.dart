@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../repositories/firestore/firestore_providers.dart';
 import '/features/custom_colors.dart';
+import '../../../repositories/firestore/firestore_providers.dart';
 import '../../show_alert_dialog.dart';
 import '../../show_exception_alert_dialog.dart';
 import '../../strings.dart';
@@ -48,88 +48,89 @@ class AccountPage extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [hawaiianPink, alaskaBlue],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-              child: Column(
-                children: [
-                  const SizedBox(height: 50),
-                  Avatar(
-                    photoUrl: user.photoURL,
-                    radius: 50,
-                    borderColor: Colors.white,
-                    borderWidth: 3.0,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [hawaiianPink, alaskaBlue],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
                   ),
-                  Text(
-                    user.displayName ?? 'Guest',
-                    style: const TextStyle(
-                      fontSize: 22,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                ),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 50),
+                    Avatar(
+                      photoUrl: user.photoURL,
+                      radius: 50,
+                      borderColor: Colors.white,
+                      borderWidth: 3.0,
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                ],
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.2),
-              ),
-            ),
-            const SizedBox(height: 20),
-            _buildInfoCard(
-              icon: Icons.trending_up,
-              label: 'Streak',
-              value: '5 days',
-            ),
-            _buildInfoCard(
-              icon: Icons.directions_walk,
-              label: 'Miles/Points',
-              value: '1250 miles',
-            ),
-            _buildInfoCard(
-              icon: Icons.person,
-              label: 'Name',
-              value: user.displayName ?? 'N/A',
-            ),
-            _buildInfoCard(
-              icon: Icons.email,
-              label: 'Email',
-              value: user.email ?? 'N/A',
-            ),
-            _buildInfoCard(
-              icon: Icons.lock,
-              label: 'Password',
-              value: '********',
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+                    Text(
+                      user.displayName ?? 'Guest',
+                      style: const TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                  ],
                 ),
-                backgroundColor: Colors.blue[900],
               ),
-              onPressed: () => _confirmSignOut(context, firebaseAuth),
-              child: const Text(
-                'Log Out',
-                style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.2),
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-          ],
+              const SizedBox(height: 20),
+              _buildInfoCard(
+                icon: Icons.trending_up,
+                label: 'Streak',
+                value: '5 days',
+              ),
+              _buildInfoCard(
+                icon: Icons.directions_walk,
+                label: 'Miles/Points',
+                value: '1250 miles',
+              ),
+              _buildInfoCard(
+                icon: Icons.person,
+                label: 'Name',
+                value: user.displayName ?? 'N/A',
+              ),
+              _buildInfoCard(
+                icon: Icons.email,
+                label: 'Email',
+                value: user.email ?? 'N/A',
+              ),
+              _buildInfoCard(
+                icon: Icons.lock,
+                label: 'Password',
+                value: '********',
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  backgroundColor: Colors.blue[900],
+                ),
+                onPressed: () => _confirmSignOut(context, firebaseAuth),
+                child: const Text(
+                  'Log Out',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );
@@ -154,9 +155,9 @@ class AccountPage extends ConsumerWidget {
         subtitle: Text(value),
         trailing: hasEditOption
             ? IconButton(
-          icon: const Icon(Icons.edit, color: Colors.grey),
-          onPressed: onEditPressed,
-        )
+                icon: const Icon(Icons.edit, color: Colors.grey),
+                onPressed: onEditPressed,
+              )
             : null,
       ),
     );
