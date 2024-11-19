@@ -5,6 +5,7 @@ import '../../strings.dart';
 enum TabItem {
   questions,
   explore,
+  tiers,
   account,
 }
 
@@ -28,6 +29,11 @@ class TabItemData {
       key: Keys.exploreTab,
       title: Strings.explorePage,
       icon: Icons.explore,
+    ),
+    TabItem.tiers: TabItemData(
+      key: Keys.tiersTab,
+      title: Strings.tiers,
+      icon: Icons.star,
     ),
     TabItem.account: TabItemData(
       key: Keys.accountTab,

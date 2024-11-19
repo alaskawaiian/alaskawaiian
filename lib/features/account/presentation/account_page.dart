@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../repositories/firestore/firestore_providers.dart';
-import '../../keys.dart';
 import '../../show_alert_dialog.dart';
 import '../../show_exception_alert_dialog.dart';
 import '../../strings.dart';
+import '../../user/data/user_database_provider.dart';
 import 'avatar.dart';
 
 class AccountPage extends ConsumerWidget {
@@ -45,6 +45,7 @@ class AccountPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final firebaseAuth = ref.watch(firebaseAuthProvider);
     final user = firebaseAuth.currentUser!;
+    final userStream = ref.watch(userStreamProvider);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -82,10 +83,22 @@ class AccountPage extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 20),
-            _buildInfoCard(
-              icon: Icons.trending_up,
-              label: 'Streak',
-              value: '5 days',
+            userStream.when(
+              data: (userData) => _buildInfoCard(
+                icon: Icons.trending_up,
+                label: 'Streak',
+                value: '${userData.streak} days',
+              ),
+              loading: () => _buildInfoCard(
+                icon: Icons.trending_up,
+                label: 'Streak',
+                value: 'Loading...',
+              ),
+              error: (error, stack) => _buildInfoCard(
+                icon: Icons.trending_up,
+                label: 'Streak',
+                value: 'Error loading streak',
+              ),
             ),
             _buildInfoCard(
               icon: Icons.directions_walk,
@@ -109,7 +122,8 @@ class AccountPage extends ConsumerWidget {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
@@ -118,9 +132,7 @@ class AccountPage extends ConsumerWidget {
               onPressed: () => _confirmSignOut(context, firebaseAuth),
               child: const Text(
                 'Log Out',
-                style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white),
+                style: TextStyle(fontSize: 18, color: Colors.white),
               ),
             ),
             const SizedBox(height: 20),
@@ -149,9 +161,9 @@ class AccountPage extends ConsumerWidget {
         subtitle: Text(value),
         trailing: hasEditOption
             ? IconButton(
-          icon: const Icon(Icons.edit, color: Colors.grey),
-          onPressed: onEditPressed,
-        )
+                icon: const Icon(Icons.edit, color: Colors.grey),
+                onPressed: onEditPressed,
+              )
             : null,
       ),
     );
