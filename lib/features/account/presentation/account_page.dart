@@ -10,6 +10,7 @@ import '../../show_alert_dialog.dart';
 import '../../show_exception_alert_dialog.dart';
 import '../../strings.dart';
 import 'avatar.dart';
+import '../../user/data/user_database_provider.dart';
 
 class AccountPage extends ConsumerWidget {
   Future<void> _signOut(BuildContext context, FirebaseAuth firebaseAuth) async {
@@ -24,8 +25,7 @@ class AccountPage extends ConsumerWidget {
     }
   }
 
-  Future<void> _confirmSignOut(
-      BuildContext context, FirebaseAuth firebaseAuth) async {
+  Future<void> _confirmSignOut(BuildContext context, FirebaseAuth firebaseAuth) async {
     final bool didRequestSignOut = (await showAlertDialog(
           context: context,
           title: Strings.logout,
@@ -45,6 +45,7 @@ class AccountPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final firebaseAuth = ref.watch(firebaseAuthProvider);
     final user = firebaseAuth.currentUser!;
+    final userStream = ref.watch(userStreamProvider);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -82,10 +83,22 @@ class AccountPage extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 20),
-            _buildInfoCard(
-              icon: Icons.trending_up,
-              label: 'Streak',
-              value: '5 days',
+            userStream.when(
+              data: (userData) => _buildInfoCard(
+                icon: Icons.trending_up,
+                label: 'Streak',
+                value: '${userData.streak} days',
+              ),
+              loading: () => _buildInfoCard(
+                icon: Icons.trending_up,
+                label: 'Streak',
+                value: 'Loading...',
+              ),
+              error: (error, stack) => _buildInfoCard(
+                icon: Icons.trending_up,
+                label: 'Streak',
+                value: 'Error loading streak',
+              ),
             ),
             _buildInfoCard(
               icon: Icons.directions_walk,
