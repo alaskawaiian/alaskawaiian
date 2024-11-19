@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import '../../data/shorts_controller.dart';
 import '../../domain/shorts_state.dart';
 import '../../domain/video.dart';
-import 'video_data_loader_element.dart';
+import 'youtube_shorts_default_widgets.dart';
 import 'youtube_shorts_video_player.dart';
-import 'video_completer_future_builder.dart';
 
 class YoutubeShorts extends StatefulWidget {
   /// The controller of the short's.
@@ -123,10 +122,18 @@ class _YoutubeShortsPageState extends State<YoutubeShorts> {
 
   @override
   Widget build(BuildContext context) {
-    return VideoDataLoaderElement(
-      controller: widget.controller,
-      errorWidget: widget.errorWidget,
-      loadingWidget: widget.loadingWidget,
+    return ValueListenableBuilder(
+      valueListenable: widget.controller,
+      builder: (context, shortsState, child) {
+        if (shortsState.isDataState) {
+          return child!;
+        } else if (shortsState.isErrorState) {
+          shortsState as ShortsStateError;
+          return YoutubeShortsDefaultErrorWidget();
+        } else {
+          return YoutubeShortsDefaultLoadingWidget();
+        }
+      },
       child: PageView.builder(
         scrollDirection: Axis.vertical,
         controller: pageController,
@@ -145,22 +152,28 @@ class _YoutubeShortsPageState extends State<YoutubeShorts> {
           if (!isSelectedIndex && isIndexBelowMaxLength) return null;
           final data = widget.controller.getVideoInIndex(index);
           if (data is ShortsVideoData) {
-            return VideoCompleterFutureBuilder(
-              index: index,
-              shortsVideoData: data,
-              errorWidget: widget.errorWidget,
-              loadingWidget: widget.loadingWidget,
-              builder: (context, videoData) {
-                return YoutubeShortsVideoPlayer(
-                  willHaveDefaultShortsControllers:
-                      widget.willHaveDefaultShortsControllers,
-                  index: index,
-                  pageController: pageController,
-                  data: videoData,
-                  videoBuilder: widget.videoBuilder,
-                  overlayWidgetBuilder: widget.overlayWidgetBuilder,
-                  initialVolume: widget.initialVolume,
-                );
+            return FutureBuilder(
+              future: data.video.future,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  final data = snapshot.data;
+                  if (snapshot.hasError || data == null) {
+                    return YoutubeShortsDefaultErrorWidget();
+                  }
+
+                  return YoutubeShortsVideoPlayer(
+                    willHaveDefaultShortsControllers:
+                        widget.willHaveDefaultShortsControllers,
+                    index: index,
+                    pageController: pageController,
+                    data: data,
+                    videoBuilder: widget.videoBuilder,
+                    overlayWidgetBuilder: widget.overlayWidgetBuilder,
+                    initialVolume: widget.initialVolume,
+                  );
+                }
+
+                return YoutubeShortsDefaultLoadingWidget();
               },
             );
           } else if (data is ShortsAdsData && widget.adsWidgetBuilder != null) {
