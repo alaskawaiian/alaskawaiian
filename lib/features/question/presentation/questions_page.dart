@@ -53,47 +53,57 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
 
     return question.when(
         data: (question) {
-          return Scaffold(
-            body: Stack(children: [
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [hawaiianPink, alaskaBlue],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
+          return Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [hawaiianPink, alaskaBlue],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: PreferredSize(
+                preferredSize: Size.fromHeight(150.0),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Daily Questions',
+                            style: TextStyle(
+                              fontSize: 28.0,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Jomolhari',
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(height: 4.0),
+                          Text(
+                            'Current Streak: ${user.requireValue.streak} days',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              color: Colors.white70,
+                              fontFamily: 'Jomolhari',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
-              Positioned(
-                top: 45.0,
-                left: 20.0,
+              body: SingleChildScrollView(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Daily Questions',
-                      style: TextStyle(
-                        fontSize: 28.0,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Jomolhari',
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(height: 8.0),
-                    Text(
-                      'Current Streak: ${user.requireValue.streak} days',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.white70,
-                        fontFamily: 'Jomolhari',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Card(
                       color: Colors.white,
@@ -104,89 +114,89 @@ class _QuestionsPageState extends ConsumerState<QuestionsPage> {
                       elevation: 4.0,
                       child: Container(
                         padding: const EdgeInsets.all(16.0),
-                        height: 630,
+                        height: MediaQuery.of(context).size.height * 0.7,
                         width: double.infinity,
                         child: user.requireValue.hasAnswered()
                             ? Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'You have already answered today\'s question!',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 25.0, color: Colors.black),
-                                    ),
-                                    SizedBox(height: 20.0),
-                                    Text(
-                                      'Come back tomorrow for a new question!',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.black87),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Text(
-                                    question.question,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'Jomolhari',
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 20.0),
-                                  Expanded(
-                                    child: GridView.builder(
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        childAspectRatio: 1,
-                                        crossAxisSpacing: 10.0,
-                                        mainAxisSpacing: 10.0,
-                                      ),
-                                      itemCount: 4,
-                                      itemBuilder: (context, index) {
-                                        return Card(
-                                          color: Colors.grey[200],
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                          elevation: 3.0,
-                                          child: InkWell(
-                                            onTap: () {
-                                              answerQuestion(index);
-                                            },
-                                            child: Center(
-                                              child: Text(
-                                                question.choices[index],
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontSize: 15.0,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ],
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'You have already answered today\'s question!',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 25.0, color: Colors.black),
                               ),
+                              SizedBox(height: 20.0),
+                              Text(
+                                'Come back tomorrow for a new question!',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: Colors.black87),
+                              ),
+                            ],
+                          ),
+                        )
+                            : Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              question.question,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Jomolhari',
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(height: 20.0),
+                            Expanded(
+                              child: GridView.builder(
+                                gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 1,
+                                  crossAxisSpacing: 10.0,
+                                  mainAxisSpacing: 10.0,
+                                ),
+                                itemCount: 4,
+                                itemBuilder: (context, index) {
+                                  return Card(
+                                    color: Colors.grey[200],
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(12.0),
+                                    ),
+                                    elevation: 3.0,
+                                    child: InkWell(
+                                      onTap: () {
+                                        answerQuestion(index);
+                                      },
+                                      child: Center(
+                                        child: Text(
+                                          question.choices[index],
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 15.0,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ]),
+              )
+            ),
           );
         },
         loading: () => CircularProgressIndicator(),

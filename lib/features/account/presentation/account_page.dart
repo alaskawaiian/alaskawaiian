@@ -50,96 +50,98 @@ class AccountPage extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [hawaiianPink, alaskaBlue],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-              child: Column(
-                children: [
-                  const SizedBox(height: 50),
-                  Avatar(
-                    photoUrl: user.photoURL,
-                    radius: 50,
-                    borderColor: Colors.white,
-                    borderWidth: 3.0,
-                  ),
-                  Text(
-                    user.displayName ?? 'Guest',
-                    style: const TextStyle(
-                      fontSize: 22,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+      body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [hawaiianPink, alaskaBlue],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
                     ),
                   ),
-                  const SizedBox(height: 10),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            userStream.when(
-              data: (userData) => _buildInfoCard(
-                icon: Icons.trending_up,
-                label: 'Streak',
-                value: '${userData.streak} days',
-              ),
-              loading: () => _buildInfoCard(
-                icon: Icons.trending_up,
-                label: 'Streak',
-                value: 'Loading...',
-              ),
-              error: (error, stack) => _buildInfoCard(
-                icon: Icons.trending_up,
-                label: 'Streak',
-                value: 'Error loading streak',
-              ),
-            ),
-            _buildInfoCard(
-              icon: Icons.directions_walk,
-              label: 'Miles/Points',
-              value: '120 miles',
-            ),
-            _buildInfoCard(
-              icon: Icons.person,
-              label: 'Name',
-              value: user.displayName ?? 'N/A',
-            ),
-            _buildInfoCard(
-              icon: Icons.email,
-              label: 'Email',
-              value: user.email ?? 'N/A',
-            ),
-            _buildInfoCard(
-              icon: Icons.lock,
-              label: 'Password',
-              value: '********',
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 50),
+                      Avatar(
+                        photoUrl: user.photoURL,
+                        radius: 50,
+                        borderColor: Colors.white,
+                        borderWidth: 3.0,
+                      ),
+                      Text(
+                        user.displayName ?? 'Guest',
+                        style: const TextStyle(
+                          fontSize: 22,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                    ],
+                  ),
                 ),
-                backgroundColor: Colors.blue[900],
-              ),
-              onPressed: () => _confirmSignOut(context, firebaseAuth),
-              child: const Text(
-                'Log Out',
-                style: TextStyle(fontSize: 18, color: Colors.white),
-              ),
+                const SizedBox(height: 20),
+                userStream.when(
+                  data: (userData) => _buildInfoCard(
+                    icon: Icons.trending_up,
+                    label: 'Streak',
+                    value: '${userData.streak} days',
+                  ),
+                  loading: () => _buildInfoCard(
+                    icon: Icons.trending_up,
+                    label: 'Streak',
+                    value: 'Loading...',
+                  ),
+                  error: (error, stack) => _buildInfoCard(
+                    icon: Icons.trending_up,
+                    label: 'Streak',
+                    value: 'Error loading streak',
+                  ),
+                ),
+                _buildInfoCard(
+                  icon: Icons.directions_walk,
+                  label: 'Miles/Points',
+                  value: '120 miles',
+                ),
+                _buildInfoCard(
+                  icon: Icons.person,
+                  label: 'Name',
+                  value: user.displayName ?? 'N/A',
+                ),
+                _buildInfoCard(
+                  icon: Icons.email,
+                  label: 'Email',
+                  value: user.email ?? 'N/A',
+                ),
+                _buildInfoCard(
+                  icon: Icons.lock,
+                  label: 'Password',
+                  value: '********',
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    backgroundColor: Colors.blue[900],
+                  ),
+                  onPressed: () => _confirmSignOut(context, firebaseAuth),
+                  child: const Text(
+                    'Log Out',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ),
+                const SizedBox(height: 20),
+              ],
             ),
-            const SizedBox(height: 20),
-          ],
-        ),
-      ),
+          ),
+      )
     );
   }
 
