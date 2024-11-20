@@ -25,6 +25,7 @@ class _ExploreVideoState extends State<ExploreVideo> {
       });
   }
 
+  // Method to handle play/pause functionality
   void _videoPlayPause() {
     setState(() {
       if (_controller.value.isPlaying) {
@@ -41,9 +42,11 @@ class _ExploreVideoState extends State<ExploreVideo> {
       return Center(child: CircularProgressIndicator());
     }
 
-    return GestureDetector(
-      onTap: _videoPlayPause,
-      child: Container(
+    return Listener(
+      onPointerDown: (_) {
+        _videoPlayPause();
+      },
+      child: Material(
         color: Colors.black,
         child: Center(
           child: AspectRatio(
