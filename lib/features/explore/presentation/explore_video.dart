@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-/// Stateful widget to fetch and then display video content.
 class ExploreVideo extends StatefulWidget {
   final String videoURL;
 
@@ -38,12 +37,19 @@ class _ExploreVideoState extends State<ExploreVideo> {
 
   @override
   Widget build(BuildContext context) {
+    if (!_controller.value.isInitialized) {
+      return Center(child: CircularProgressIndicator());
+    }
+
     return GestureDetector(
       onTap: _videoPlayPause,
-      child: Center(
-        child: AspectRatio(
-          aspectRatio: _controller.value.aspectRatio,
-          child: VideoPlayer(_controller),
+      child: Container(
+        color: Colors.black,
+        child: Center(
+          child: AspectRatio(
+            aspectRatio: _controller.value.aspectRatio,
+            child: VideoPlayer(_controller),
+          ),
         ),
       ),
     );
