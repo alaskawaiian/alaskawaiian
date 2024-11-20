@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-/// Stateful widget to fetch and then display video content.
 class ExploreVideo extends StatefulWidget {
   final String videoURL;
 
-  ExploreVideo({required this.videoURL});
+  const ExploreVideo({required this.videoURL});
 
   @override
   _ExploreVideoState createState() => _ExploreVideoState();
@@ -26,18 +25,42 @@ class _ExploreVideoState extends State<ExploreVideo> {
       });
   }
 
+  // Method to handle play/pause functionality
+  void _videoPlayPause() {
+    setState(() {
+      if (_controller.value.isPlaying) {
+        _controller.pause();
+      } else {
+        _controller.play();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: AspectRatio(
-        aspectRatio: _controller.value.aspectRatio,
-        child: VideoPlayer(_controller),
+    if (!_controller.value.isInitialized) {
+      return Center(child: CircularProgressIndicator());
+    }
+
+    return Listener(
+      onPointerDown: (_) {
+        _videoPlayPause();
+      },
+      child: Material(
+        color: Colors.black,
+        child: Center(
+          child: AspectRatio(
+            aspectRatio: _controller.value.aspectRatio,
+            child: VideoPlayer(_controller),
+          ),
+        ),
       ),
     );
   }
 
   @override
   void dispose() {
+    _controller.pause();
     _controller.dispose();
     super.dispose();
   }
