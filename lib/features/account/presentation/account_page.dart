@@ -49,8 +49,8 @@ class AccountPage extends ConsumerWidget {
     final userStream = ref.watch(userStreamProvider);
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
+        backgroundColor: Colors.white,
+        body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -105,7 +105,7 @@ class AccountPage extends ConsumerWidget {
                 _buildInfoCard(
                   icon: Icons.directions_walk,
                   label: 'Miles/Points',
-                  value: '120 miles',
+                  value: '1250 miles',
                 ),
                 _buildInfoCard(
                   icon: Icons.person,
@@ -124,8 +124,8 @@ class AccountPage extends ConsumerWidget {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50, vertical: 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -141,8 +141,7 @@ class AccountPage extends ConsumerWidget {
               ],
             ),
           ),
-      )
-    );
+        ));
   }
 
   // Widget for building each information card
